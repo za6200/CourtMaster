@@ -1,6 +1,8 @@
 package com.example.courtmaster;
 
-public class Exercise {
+import java.io.Serializable;
+
+public class Exercise implements Serializable {
     private String name;
     private int repeat;
     private String level;

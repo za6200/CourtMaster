@@ -30,10 +30,7 @@ public class FBRef {
             DatabaseReference userTrainingProgramRef = refTrainingPrograms.child(program.getName());
             userTrainingProgramRef.setValue(program)
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            String message = "Training program \"" + program.getName() + "\" saved!";
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                        } else {
+                        if (!(task.isSuccessful())) {
                             Toast.makeText(context, "Error saving training program", Toast.LENGTH_LONG).show();
                         }
                     });

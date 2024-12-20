@@ -1,8 +1,9 @@
 package com.example.courtmaster;
 
 import java.util.List;
+import java.io.Serializable;
 
-public class Training_Program extends Exercise{
+public class Training_Program extends Exercise implements Serializable{
     private String name;
     private String description;
     private List<Exercise> program;
@@ -10,7 +11,7 @@ public class Training_Program extends Exercise{
     public Training_Program(){
 
     }
-    public Training_Program(String name, String description,List<Exercise> program )
+    public Training_Program(String name, String description,List<Exercise> program)
     {
         this.name = name;
         this.description = description;

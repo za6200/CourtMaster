@@ -167,6 +167,7 @@ public class Registration extends AppCompatActivity {
                                 FirebaseUser user = refAuth.getCurrentUser();
                                 FBRef.getUser(user);
                                 uid = user.getUid();
+                                //** TO DO: add the programs he made himself **
                                 List<Training_Program> userPrograms = new ArrayList<>();
                                 userdb = new User(uid, name, userPrograms);
                                 Toast.makeText(Registration.this, "Successful registration", Toast.LENGTH_SHORT).show();
