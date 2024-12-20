@@ -77,7 +77,6 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
         Training_Program clickedProgram = trainingProgramList.get(position);
         ShowProgram = new Intent(Built_In_Programs.this, Show_Program.class);
         ShowProgram.putExtra("Training Program", clickedProgram);
-        ShowProgram.putExtra("position", position);
         startActivity(ShowProgram);
     }
 }

@@ -20,7 +20,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 public class Show_Program extends AppCompatActivity {
 
     TextView ProgramTV, ExerciseDetailsTV;
-    int position;
+    int position = 0;
     Training_Program trainingProgram;
     Intent programInfo;
     Button nextEx;
@@ -37,7 +37,7 @@ public class Show_Program extends AppCompatActivity {
 
         programInfo = getIntent();
         trainingProgram = (Training_Program) programInfo.getSerializableExtra("Training Program");
-        position = programInfo.getIntExtra("position", -1);
+        position = 0;
 
         if (trainingProgram != null && position != -1) {
             ProgramTV.setText(trainingProgram.getName());
