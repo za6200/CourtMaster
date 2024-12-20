@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Registration"
+        android:title="Registration"
+        android:orderInCategory="100" />
+    <item
+        android:id="@+id/Video"
+        android:title="Video"
+        android:orderInCategory="200" />
+    <item
+        android:id="@+id/GPS_SPOT"
+        android:title="GPS_SPOT"
+        android:orderInCategory="300" />
+    <item
+        android:id="@+id/Sign_Places"
+        android:title="Sign_Places"
+        android:orderInCategory="400" />
+    <item
+        android:id="@+id/Signs2"
+        android:title="Signs2"
+        android:orderInCategory="500" />
+
+</menu>
