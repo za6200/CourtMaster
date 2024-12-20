@@ -42,6 +42,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:21.0.1")
     implementation ("com.android.volley:volley:1.2.1")
     implementation ("org.json:json:20230618")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.1")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

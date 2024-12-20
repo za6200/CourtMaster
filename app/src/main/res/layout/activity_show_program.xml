@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="text"
             android:textColor="@color/quantum_orange800"
-            android:textSize="38sp" />
+            android:textSize="30sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -39,11 +39,24 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/ExerciseDetails"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtubePlayer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            app:videoId="-qySIh0H1Ug" />
 
         <Space
             android:layout_width="match_parent"
@@ -54,9 +67,11 @@
             android:id="@+id/nextEx"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="3"
+            android:onClick="nextExercise"
             android:text="Next exercise"
-            android:textSize="36sp" />
+            android:textSize="20sp" />
+
     </LinearLayout>
 
     <Space
