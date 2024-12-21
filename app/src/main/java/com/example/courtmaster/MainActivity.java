@@ -17,8 +17,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(this, Sign_Places.class);
-        Intent registration = new Intent(this, Registration.class);
-        startActivity(registration);
+        Start = new Intent(this, Sign_Places.class);
+        Registration = new Intent(this, Registration.class);
+        startActivity(Registration);
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        startActivity(Registration);
     }
 }
