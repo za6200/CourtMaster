@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class Personal_Program extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner LevelSpin;
     String[] Levels = {"Easy", "Medium", "Hard", "Insane"};
@@ -46,6 +48,10 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
 
         exercise = new Exercise();
         PersonalProgram = new Training_Program();
+
+        if (PersonalProgram.getProgram() == null) {
+            PersonalProgram.setProgram(new ArrayList<>());
+        }
     }
 
     public void Next_Exercise(View view) {
@@ -75,7 +81,6 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         // Set exercise values
         exercise.setName(exerciseName);
         exercise.setRepeat(repeat);
-        exercise.setLevel("medium");
         exercise.setUrl(videoId);
         exercise.setDescription(description);
         exercise.setLevel(Levels[LevelSpin.getSelectedItemPosition()]);
@@ -84,34 +89,18 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         if (counter == 0) {
             PersonalProgram.setName(ProgramNameET.getText().toString());
             PersonalProgram.setDescription(ProgramDescriptionET.getText().toString());
-            PersonalProgram.addExercise(exercise);
         }
-        //Toast.makeText(getApplicationContext(), "repeat: " + exercise., Toast.LENGTH_SHORT).show();
-        PersonalProgram.addExercise(exercise);
 
-        // Push the updated program to the database
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms").child(PersonalProgram.getName());
-        String programId = databaseReference.push().getKey(); // Use push() for a unique ID for each new program
-        if (programId != null) {
-            databaseReference.child(programId).setValue(PersonalProgram)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Exercise added successfully!", Toast.LENGTH_SHORT).show();
-                            counter++;
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Error adding exercise", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+        PersonalProgram.getProgram().add(exercise);
         ExNameET.setText("");
         ExRepeatET.setText("");
         ExVideoIdET.setText("");
         ExDescriptionET.setText("");
+        counter++;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        exercise.setLevel(Levels[i]);
     }
 
     @Override
@@ -119,6 +108,14 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     }
 
     public void Finish(View view) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
+        databaseReference.child(PersonalProgram.getName()).setValue(PersonalProgram).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(getApplicationContext(), "Exercise added successfully!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Error adding exercise", Toast.LENGTH_SHORT).show();
+            }
+        });
         Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
         startActivity(MainScreen);
     }
