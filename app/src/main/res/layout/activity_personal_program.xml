@@ -202,7 +202,15 @@
                     android:layout_height="0dp"
                     android:layout_weight="4"
                     android:onClick="Next_Exercise"
-                    android:text="Next Exercise"
+                    android:text="Add Exercise"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/Finish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="Finish"
+                    android:text="Finish Program"
                     android:textSize="24sp" />
 
             </LinearLayout>

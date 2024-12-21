@@ -1,12 +1,13 @@
 package com.example.courtmaster;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 
 public class Training_Program extends Exercise implements Serializable{
     private String name;
     private String description;
-    private List<Exercise> program;
+    private List<Exercise> program = new ArrayList<>();
 
     public Training_Program(){
 
