@@ -1,6 +1,7 @@
 package com.example.courtmaster;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,5 +15,8 @@ public class Personal_Program extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_program);
+    }
+
+    public void Next_Exercise(View view) {
     }
 }
