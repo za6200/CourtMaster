@@ -105,7 +105,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:text="TextView" />
+                    android:gravity="center"
+                    android:text="Exercise Details"
+                    android:textColor="@color/quantum_orange500"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -127,15 +131,20 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <EditText
-                    android:id="@+id/ExLevelET"
+                <TextView
+                    android:id="@+id/LevelTitle"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="5"
-                    android:ems="10"
-                    android:hint="Level"
-                    android:inputType="text"
-                    android:textSize="24sp" />
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="2"
+                    android:text="Select Level:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/LevelSpin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -149,7 +158,7 @@
                     android:layout_weight="5"
                     android:ems="10"
                     android:hint="Repeat"
-                    android:inputType="text"
+                    android:inputType="numberSigned"
                     android:textSize="24sp" />
 
                 <Space
@@ -202,7 +211,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.5" />
 
     </LinearLayout>
 
