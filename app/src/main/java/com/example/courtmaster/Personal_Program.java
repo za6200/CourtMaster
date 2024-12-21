@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     String[] Levels = {"Easy", "Medium", "Hard", "Insane"};
     Exercise exercise;
     Training_Program PersonalProgram;
+    TextView PersonalProgramTV;
     EditText ProgramNameET, ProgramDescriptionET, ExNameET, ExRepeatET, ExVideoIdET, ExDescriptionET;
     Button NextExerciseBtn, Finish;
     int counter = 0;
@@ -41,6 +43,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         ExDescriptionET = findViewById(R.id.ExDescriptionET);
         NextExerciseBtn = findViewById(R.id.NextExerciseBtn);
         Finish = findViewById(R.id.Finish);
+        PersonalProgramTV = findViewById(R.id.PersonalProgramTV);
 
         ArrayAdapter<String> LevelAdp = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Levels);
         LevelSpin.setAdapter(LevelAdp);
@@ -54,11 +57,14 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     }
 
     public void Next_Exercise(View view) {
+
         // Input validation
         String exerciseName = ExNameET.getText().toString();
         String repeatText = ExRepeatET.getText().toString();
         String videoId = ExVideoIdET.getText().toString();
         String description = ExDescriptionET.getText().toString();
+
+
 
         if (exerciseName.isEmpty() || repeatText.isEmpty() || videoId.isEmpty() || description.isEmpty()) {
             Toast.makeText(getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
@@ -90,6 +96,9 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         if (counter == 0) {
             PersonalProgram.setName(ProgramNameET.getText().toString());
             PersonalProgram.setDescription(ProgramDescriptionET.getText().toString());
+            PersonalProgramTV.setText(ProgramNameET.getText().toString());
+            ProgramNameET.setVisibility(View.INVISIBLE);
+            ProgramDescriptionET.setVisibility(View.INVISIBLE);
         }
 
         PersonalProgram.getProgram().add(exercise);
