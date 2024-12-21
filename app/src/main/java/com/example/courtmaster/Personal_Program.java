@@ -46,7 +46,6 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         LevelSpin.setAdapter(LevelAdp);
         LevelSpin.setOnItemSelectedListener(this);
 
-        exercise = new Exercise();
         PersonalProgram = new Training_Program();
 
         if (PersonalProgram.getProgram() == null) {
@@ -79,11 +78,13 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         }
 
         // Set exercise values
-        exercise.setName(exerciseName);
+        /*exercise.setName(exerciseName);
         exercise.setRepeat(repeat);
         exercise.setUrl(videoId);
         exercise.setDescription(description);
-        exercise.setLevel(Levels[LevelSpin.getSelectedItemPosition()]);
+        exercise.setLevel(Levels[LevelSpin.getSelectedItemPosition()]);*/
+
+        exercise = new Exercise(exerciseName, repeat, Levels[LevelSpin.getSelectedItemPosition()], videoId, description);
 
         // Set the PersonalProgram name and description only once
         if (counter == 0) {
