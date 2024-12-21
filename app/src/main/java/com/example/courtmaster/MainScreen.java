@@ -25,7 +25,12 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void train(View view) {
-        Intent PersonalTraining = new Intent(MainScreen.this, Built_In_Programs.class);
+        Intent Built_In = new Intent(MainScreen.this, Built_In_Programs.class);
+        startActivity(Built_In);
+    }
+
+    public void Personal_Program(View view) {
+        Intent PersonalTraining = new Intent(MainScreen.this, Personal_Program.class);
         startActivity(PersonalTraining);
     }
 }
