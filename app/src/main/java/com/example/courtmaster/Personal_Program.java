@@ -28,6 +28,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     TextView PersonalProgramTV;
     EditText ProgramNameET, ProgramDescriptionET, ExNameET, ExRepeatET, ExVideoIdET, ExDescriptionET;
     Button NextExerciseBtn, Finish;
+    String exerciseName, repeatText, videoId, description;
     int counter = 0;
 
     @Override
@@ -45,11 +46,19 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         Finish = findViewById(R.id.Finish);
         PersonalProgramTV = findViewById(R.id.PersonalProgramTV);
 
+
         ArrayAdapter<String> LevelAdp = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Levels);
         LevelSpin.setAdapter(LevelAdp);
         LevelSpin.setOnItemSelectedListener(this);
 
         PersonalProgram = new Training_Program();
+
+        PersonalProgram.setName("Program Name");
+        PersonalProgram.setDescription("Program Description");
+        ExNameET.setText("");
+        ExRepeatET.setText("");
+        ExVideoIdET.setText("");
+        ExDescriptionET.setText("");
 
         if (PersonalProgram.getProgram() == null) {
             PersonalProgram.setProgram(new ArrayList<>());
@@ -58,11 +67,10 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
 
     public void Next_Exercise(View view) {
 
-        // Input validation
-        String exerciseName = ExNameET.getText().toString();
-        String repeatText = ExRepeatET.getText().toString();
-        String videoId = ExVideoIdET.getText().toString();
-        String description = ExDescriptionET.getText().toString();
+        exerciseName = ExNameET.getText().toString();
+        repeatText = ExRepeatET.getText().toString();
+        videoId = ExVideoIdET.getText().toString();
+        description = ExDescriptionET.getText().toString();
 
 
 
@@ -91,7 +99,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
             PersonalProgram.setDescription(ProgramDescriptionET.getText().toString());
             PersonalProgramTV.setText(ProgramNameET.getText().toString());
         }
-        if(PersonalProgram.getName().equals("") || PersonalProgram.getDescription().equals(""))
+        if(PersonalProgram.getName().equals("Program Name") || PersonalProgram.getDescription().equals("Program Description"))
         {
             Toast.makeText(getApplicationContext(), "Program Name and Description fields must be filled", Toast.LENGTH_SHORT).show();
             return;
@@ -118,15 +126,33 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     }
 
     public void Finish(View view) {
+
+        // Ensure all fields are checked before proceeding
+        if (ProgramNameET.getText().toString().equals("Program Name") || ProgramDescriptionET.getText().toString().equals("Program Description")) {
+
+            Toast.makeText(getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(PersonalProgram.getProgram().isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "No exercise added", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
         databaseReference.child(PersonalProgram.getName()).setValue(PersonalProgram).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(getApplicationContext(), "Exercise added successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Program added successfully!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(), "Error adding exercise", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Error adding program", Toast.LENGTH_SHORT).show();
             }
         });
         Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
         startActivity(MainScreen);
+        ExNameET.setText("");
+        ExRepeatET.setText("");
+        ExVideoIdET.setText("");
+        ExDescriptionET.setText("");
     }
+
 }
