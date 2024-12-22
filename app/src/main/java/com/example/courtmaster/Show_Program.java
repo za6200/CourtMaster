@@ -70,7 +70,7 @@ public class Show_Program extends AppCompatActivity {
 
         builder.setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("Restart Program", new DialogInterface.OnClickListener() {
+                .setNeutralButton("Restart Program", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         position = 0;
                         ExerciseDetailsTV.setText("Exercise name: " + trainingProgram.getProgram().get(position).getName() + "\n\nLevel: " + trainingProgram.getProgram().get(position).getLevel() + "\n\nRepeat: " + trainingProgram.getProgram().get(position).getRepeat() + "\n\nDescription: " + trainingProgram.getProgram().get(position).getDescription() + "\n");
