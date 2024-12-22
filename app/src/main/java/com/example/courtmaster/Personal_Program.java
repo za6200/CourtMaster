@@ -36,7 +36,6 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     EditText ProgramNameET, ProgramDescriptionET, ExNameET, ExRepeatET, ExVideoIdET, ExDescriptionET;
     Button NextExerciseBtn, Finish;
     String exerciseName, repeatText, videoId, description;
-    private User currentUser;
     int counter = 0;
 
     @Override
@@ -103,6 +102,10 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
 
         // Set the PersonalProgram name and description only once
         if (counter == 0) {
+            if (ProgramNameET.getText().toString().equals("Program Name") || ProgramNameET.getText().toString().equals("") || ProgramDescriptionET.getText().toString().equals("Program Description") || ProgramDescriptionET.getText().toString().equals("")) {
+                showAlertDialog("All Required fields must be filled");
+                return;
+            }
             PersonalProgram.setName(ProgramNameET.getText().toString());
             PersonalProgram.setDescription(ProgramDescriptionET.getText().toString());
             PersonalProgramTV.setText(ProgramNameET.getText().toString());
@@ -145,20 +148,16 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
                     // Existing user
                     user = snapshot.getValue(User.class);
                 } else {
-                    // Create a new user if none exists
                     user = new User();
                     user.setUid(currentUid);
                 }
 
-                // Ensure user has a program list
                 if (user.getPrograms() == null) {
                     user.setPrograms(new ArrayList<>());
                 }
 
-                // 1) Add the new program
                 user.getPrograms().add(PersonalProgram);
 
-                // 2) Update the user node in Firebase
                 userRef.setValue(user).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         showAlertDialog("Program added to user successfully!");
@@ -176,7 +175,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     }
 
     public void Finish(View view) {
-        if (ProgramNameET.getText().toString().equals("Program Name") || ProgramDescriptionET.getText().toString().equals("Program Description")) {
+        if (ProgramNameET.getText().toString().equals("Program Name") || ProgramNameET.getText().toString().equals("") || ProgramDescriptionET.getText().toString().equals("Program Description") || ProgramDescriptionET.getText().toString().equals("")) {
             showAlertDialog("All Required fields must be filled");
             return;
         } else if (PersonalProgram.getProgram().isEmpty()) {

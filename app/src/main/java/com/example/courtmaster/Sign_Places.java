@@ -92,6 +92,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                     1);
         } else {
             getLocation();
+            Retrivieving_Location.dismiss();
         }
     }
 
@@ -103,8 +104,6 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                 || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
-
-        // Center the map on the current location
         if (latitude != 0.0 && longitude != 0.0) {
             LatLng currentLocation = new LatLng(latitude, longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 14f));
@@ -312,7 +311,6 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // You can add additional actions if needed
                     }
                 });
         AlertDialog alert = builder.create();

@@ -33,4 +33,9 @@ public class MainScreen extends AppCompatActivity {
         Intent PersonalTraining = new Intent(MainScreen.this, Personal_Program.class);
         startActivity(PersonalTraining);
     }
+
+    public void Programs(View view) {
+        Intent MyPrograms = new Intent(MainScreen.this, My_Programs.class);
+        startActivity(MyPrograms);
+    }
 }

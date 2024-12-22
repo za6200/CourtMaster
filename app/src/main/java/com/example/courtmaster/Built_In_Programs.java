@@ -92,7 +92,6 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // You can add additional actions if needed
                     }
                 });
         AlertDialog alert = builder.create();

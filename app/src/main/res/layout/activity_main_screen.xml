@@ -22,7 +22,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3" />
+            android:layout_weight="0.14" />
 
         <TextView
             android:id="@+id/textView"
@@ -38,7 +38,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.4" />
 
         <Button
             android:id="@+id/trainBt"
@@ -47,7 +47,7 @@
             android:layout_weight="0.5"
             android:onClick="train"
             android:text="Built in program"
-            android:textSize="24sp" />
+            android:textSize="26sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:layout_weight="0.5"
             android:onClick="Personal_Program"
             android:text="Personal Program"
-            android:textSize="24sp" />
+            android:textSize="27sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -80,7 +80,21 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.2" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:onClick="Programs"
+            android:text="My Programs"
+            android:textSize="29sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4" />
     </LinearLayout>
 
     <Space

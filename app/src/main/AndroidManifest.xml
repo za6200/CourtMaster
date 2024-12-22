@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CourtMaster"
         tools:targetApi="32">
         <activity
+            android:name=".My_Programs"
+            android:exported="false" />
+        <activity
             android:name=".Personal_Program"
             android:exported="false" />
         <activity

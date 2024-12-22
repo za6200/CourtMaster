@@ -48,6 +48,12 @@ public class Show_Program extends AppCompatActivity {
             youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    if(trainingProgram.getProgram().get(position).getUrl().isEmpty() && error < 1)
+                    {
+                        normalShowAlertDialog("Invalid video ID for this exercise.");
+                        youTubePlayerView.setVisibility(View.INVISIBLE);
+                        error++;
+                    }
                     activeYouTubePlayer = youTubePlayer; // Save the YouTubePlayer instance
                     loadCurrentVideo(); // Load the first video
                 }
