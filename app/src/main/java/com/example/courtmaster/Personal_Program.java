@@ -14,11 +14,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     EditText ProgramNameET, ProgramDescriptionET, ExNameET, ExRepeatET, ExVideoIdET, ExDescriptionET;
     Button NextExerciseBtn, Finish;
     String exerciseName, repeatText, videoId, description;
+    private User currentUser;
     int counter = 0;
 
     @Override
@@ -76,8 +82,8 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
 
 
 
-        if (exerciseName.isEmpty() || repeatText.isEmpty() || videoId.isEmpty() || description.isEmpty()) {
-            showAlertDialog("All fields must be filled");
+        if (exerciseName.isEmpty() || repeatText.isEmpty() || description.isEmpty()) {
+            showAlertDialog("All Required fields must be filled");
             return;
         }
 
@@ -127,43 +133,84 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
+    private void loadCurrentUser() {
+        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUid);
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user;
+                if (snapshot.exists()) {
+                    // Existing user
+                    user = snapshot.getValue(User.class);
+                } else {
+                    // Create a new user if none exists
+                    user = new User();
+                    user.setUid(currentUid);
+                }
+
+                // Ensure user has a program list
+                if (user.getPrograms() == null) {
+                    user.setPrograms(new ArrayList<>());
+                }
+
+                // 1) Add the new program
+                user.getPrograms().add(PersonalProgram);
+
+                // 2) Update the user node in Firebase
+                userRef.setValue(user).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        showAlertDialog("Program added to user successfully!");
+                    } else {
+                        showAlertDialog("Error updating user with new program.");
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                showAlertDialog("User load cancelled: " + error.getMessage());
+            }
+        });
+    }
+
     public void Finish(View view) {
-
-        // Ensure all fields are checked before proceeding
         if (ProgramNameET.getText().toString().equals("Program Name") || ProgramDescriptionET.getText().toString().equals("Program Description")) {
-
-            showAlertDialog("All fields must be filled");
+            showAlertDialog("All Required fields must be filled");
             return;
-        }
-        if(PersonalProgram.getProgram().isEmpty())
-        {
+        } else if (PersonalProgram.getProgram().isEmpty()) {
             showAlertDialog("No exercise added");
             return;
         }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
-        databaseReference.child(PersonalProgram.getName()).setValue(PersonalProgram).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                //Toast.makeText(getApplicationContext(), "Program added successfully!", Toast.LENGTH_SHORT).show();
-                showAlertDialog("Program added successfully!");
-            } else {
-                showAlertDialog("Error adding program");
-            }
-        });
+        databaseReference.child(PersonalProgram.getName())
+                .setValue(PersonalProgram)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        loadCurrentUser();
+                    } else {
+                        showAlertDialog("Error adding program");
+                    }
+                });
+
         Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
         startActivity(MainScreen);
+
+        // Clear text fields
         ExNameET.setText("");
         ExRepeatET.setText("");
         ExVideoIdET.setText("");
         ExDescriptionET.setText("");
     }
+
     private void showAlertDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // You can add additional actions if needed
                     }
                 });
         AlertDialog alert = builder.create();

@@ -1,5 +1,6 @@
 package com.example.courtmaster;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
     ListView ProgramList;
     List<Training_Program> trainingProgramList;
     Intent ShowProgram;
+    private ProgressDialog wating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
         ProgramList = findViewById(R.id.listViewPrograms);
 
         trainingProgramList = new ArrayList<>();
+         wating = ProgressDialog.show(this, "Find Courts", "Searching...", true);
         addProgramsToList();
     }
 
@@ -54,6 +57,7 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
                     }
                 }
                 addProgramsToAdapter();
+                wating.dismiss();
             }
 
             @Override

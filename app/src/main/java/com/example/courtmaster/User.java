@@ -16,7 +16,7 @@ public class User extends Training_Program {
     public User(String uid, String username, List<Training_Program> program) {
         this.uid = uid;
         this.username = username;
-        this.program = program;
+        this.program = new ArrayList<>();
     }
 
     public String getUid() {

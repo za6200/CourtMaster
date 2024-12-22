@@ -172,7 +172,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="5"
                     android:ems="10"
-                    android:hint="Video Id (youtube)"
+                    android:hint="Video Id (youtube) (optional)"
                     android:inputType="text"
                     android:textSize="24sp" />
 

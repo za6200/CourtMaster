@@ -1,6 +1,7 @@
 package com.example.courtmaster;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -50,6 +51,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager locationManager;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Intent GPS, Video, Registration;
+    private ProgressDialog Retrivieving_Location;
 
 
     private static final String TAG = "Sign_Places";
@@ -70,6 +72,8 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
         } else {
             Log.e(TAG, "mapView is null after findViewById");
         }
+
+        Retrivieving_Location = ProgressDialog.show(this, "Map", "Retrieving location...", true);
 
         // Initialize FusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -105,6 +109,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
             LatLng currentLocation = new LatLng(latitude, longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 14f));
         }
+        Retrivieving_Location.dismiss();
     }
 
     private void getLocation() {
@@ -156,8 +161,6 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
 
         String apiKey = "AIzaSyAuli4U0oXe5lMtKdYcQNdoVSPOeKDkfrM";
 
-        // Using the older Places API nearbysearch endpoint:
-        // We include 'keyword=basketball' to find basketball-related places.
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
                 + "?location=" + latitude + "," + longitude
                 + "&radius=" + radiusInMeters
@@ -165,7 +168,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                 + "&key=" + apiKey;
 
         Log.d(TAG, "Fetching basketball places with URL: " + url);
-
+        final ProgressDialog pd = ProgressDialog.show(this, "Find Courts", "Searching...", true);
         RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
@@ -184,7 +187,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                         Log.d(TAG, "Number of basketball places found: " + results.length());
 
                         mMap.clear(); // Clear existing markers
-
+                        pd.dismiss();
                         for (int i = 0; i < results.length(); i++) {
                             JSONObject place = results.getJSONObject(i);
 
