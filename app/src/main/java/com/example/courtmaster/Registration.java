@@ -131,6 +131,12 @@ public class Registration extends AppCompatActivity {
             email = eTemail.getText().toString();
             password = eTpass.getText().toString();
 
+            if(email.equals("") || password.equals(""))
+            {
+                Toast.makeText(getApplicationContext(), "fields must be filled with a real Gmail and Password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             final ProgressDialog pd = ProgressDialog.show(this, "Login", "Connecting...", true);
             refAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -156,6 +162,11 @@ public class Registration extends AppCompatActivity {
             name = eTname.getText().toString();
             email = eTemail.getText().toString();
             password = eTpass.getText().toString();
+            if(name.equals(""))
+            {
+                Toast.makeText(getApplicationContext(), "Name must be filled", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             final ProgressDialog pd = ProgressDialog.show(this, "Register", "Registering...", true);
             refAuth.createUserWithEmailAndPassword(email, password)
@@ -171,6 +182,8 @@ public class Registration extends AppCompatActivity {
                                 List<Training_Program> userPrograms = new ArrayList<>();
                                 userdb = new User(uid, name, userPrograms);
                                 Toast.makeText(Registration.this, "Successful registration", Toast.LENGTH_SHORT).show();
+                                Intent MainScreen = new Intent(Registration.this, MainScreen.class);
+                                startActivity(MainScreen);
                             } else {
                                 if (task.getException() instanceof FirebaseAuthUserCollisionException)
                                     Toast.makeText(Registration.this, "User with e-mail already exist!", Toast.LENGTH_SHORT).show();

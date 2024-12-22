@@ -59,7 +59,7 @@ public class Show_Program extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, "Traning Program Ended", Toast.LENGTH_SHORT).show();
-            nextEx.setText("Go Back");
+            nextEx.setText("Restart");
             position = 0;
         }
 

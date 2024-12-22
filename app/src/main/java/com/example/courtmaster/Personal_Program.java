@@ -83,13 +83,6 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
             return;
         }
 
-        // Set exercise values
-        /*exercise.setName(exerciseName);
-        exercise.setRepeat(repeat);
-        exercise.setUrl(videoId);
-        exercise.setDescription(description);
-        exercise.setLevel(Levels[LevelSpin.getSelectedItemPosition()]);*/
-
         exercise = new Exercise(exerciseName, repeat, Levels[LevelSpin.getSelectedItemPosition()], videoId, description);
 
         // Set the PersonalProgram name and description only once
@@ -97,6 +90,13 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
             PersonalProgram.setName(ProgramNameET.getText().toString());
             PersonalProgram.setDescription(ProgramDescriptionET.getText().toString());
             PersonalProgramTV.setText(ProgramNameET.getText().toString());
+        }
+        if(PersonalProgram.getName().equals("") || PersonalProgram.getDescription().equals(""))
+        {
+            Toast.makeText(getApplicationContext(), "Program Name and Description fields must be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
             ProgramNameET.setVisibility(View.INVISIBLE);
             ProgramDescriptionET.setVisibility(View.INVISIBLE);
         }
