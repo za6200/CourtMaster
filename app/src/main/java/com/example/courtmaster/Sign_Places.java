@@ -1,6 +1,7 @@
 package com.example.courtmaster;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -142,18 +144,11 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     public void onLocationChanged(@NonNull Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-
-        // Update map when location changes
-        /*if (mMap != null) {
-            LatLng currentLocation = new LatLng(latitude, longitude);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f));
-            mMap.clear();
-        }*/
     }
 
     private void fetchBasketballPlaces() {
         if (latitude == 0.0 && longitude == 0.0) {
-            Toast.makeText(this, "Current location not available.", Toast.LENGTH_SHORT).show();
+            showAlertDialog("Current location not available.");
             return;
         }
 
@@ -181,7 +176,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                         if (!status.equals("OK")) {
                             String errorMessage = response.optString("error_message", "Unknown error");
                             Log.e(TAG, "API Error: " + status + " - " + errorMessage);
-                            Toast.makeText(this, "API Error: " + status + " - " + errorMessage, Toast.LENGTH_LONG).show();
+                            showAlertDialog("API Error: " + status + " - " + errorMessage);
                             return;
                         }
 
@@ -208,12 +203,12 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
 
                     } catch (JSONException e) {
                         Log.e(TAG, "JSON parsing error: ", e);
-                        Toast.makeText(this, "Error parsing response data.", Toast.LENGTH_SHORT).show();
+                        showAlertDialog("Error parsing response data.");
                     }
                 },
                 error -> {
                     Log.e(TAG, "Volley error: ", error);
-                    Toast.makeText(this, "Error fetching basketball places.", Toast.LENGTH_SHORT).show();
+                    showAlertDialog("Error fetching basketball places.");
                 }
         );
 
@@ -224,7 +219,6 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
 
 
     public void Find_Place(View view) {
-        Toast.makeText(this, "Find Place button clicked", Toast.LENGTH_SHORT).show();
         fetchBasketballPlaces();
     }
 
@@ -289,7 +283,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                 if (mapView != null)
                     mapView.getMapAsync(this);
             } else {
-                Toast.makeText(this, "Location permissions are required.", Toast.LENGTH_SHORT).show();
+                showAlertDialog("Location permissions are required.");
             }
         }
     }
@@ -307,5 +301,18 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         // Optionally handle provider disabled
+    }
+
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // You can add additional actions if needed
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

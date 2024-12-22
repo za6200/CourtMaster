@@ -1,5 +1,6 @@
 package com.example.courtmaster;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -44,7 +46,7 @@ public class Show_Program extends AppCompatActivity {
             ExerciseDetailsTV.setText("Exercise name: " + trainingProgram.getProgram().get(position).getName() + "\n\nLevel: " + trainingProgram.getProgram().get(position).getLevel() + "\n\nRepeat: " + trainingProgram.getProgram().get(position).getRepeat() + "\n\nDescription: " + trainingProgram.getProgram().get(position).getDescription() + "\n");
             position++;
         } else {
-            Toast.makeText(this, "Training program not found!", Toast.LENGTH_SHORT).show();
+            showAlertDialog("Training program not found!");
         }
     }
 
@@ -58,10 +60,31 @@ public class Show_Program extends AppCompatActivity {
             position++;
         }
         else {
-            Toast.makeText(this, "Traning Program Ended", Toast.LENGTH_SHORT).show();
-            nextEx.setText("Restart");
+            showAlertDialog("Training Program Ended");
             position = 0;
         }
 
     }
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Restart Program", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        position = 0;
+                        ExerciseDetailsTV.setText("Exercise name: " + trainingProgram.getProgram().get(position).getName() + "\n\nLevel: " + trainingProgram.getProgram().get(position).getLevel() + "\n\nRepeat: " + trainingProgram.getProgram().get(position).getRepeat() + "\n\nDescription: " + trainingProgram.getProgram().get(position).getDescription() + "\n");
+                        position++;
+                    }
+                })
+                .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent PersonalTraining = new Intent(Show_Program.this, MainScreen.class);
+                        startActivity(PersonalTraining);
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 }

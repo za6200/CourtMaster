@@ -4,10 +4,12 @@ import static com.example.courtmaster.FBRef.*;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -133,7 +135,7 @@ public class Registration extends AppCompatActivity {
 
             if(email.equals("") || password.equals(""))
             {
-                Toast.makeText(getApplicationContext(), "fields must be filled with a real Gmail and Password", Toast.LENGTH_SHORT).show();
+                showAlertDialog("fields must be filled with a real Gmail and Password");
                 return;
             }
 
@@ -154,7 +156,7 @@ public class Registration extends AppCompatActivity {
                                 startActivity(MainScreen);
                             } else {
                                 Log.d("MainActivity", "signinUserWithEmail:fail");
-                                Toast.makeText(Registration.this, "e-mail or password are wrong!", Toast.LENGTH_LONG).show();
+                                showAlertDialog("e-mail or password are wrong!");
                             }
                         }
                     });
@@ -164,7 +166,7 @@ public class Registration extends AppCompatActivity {
             password = eTpass.getText().toString();
             if(name.equals(""))
             {
-                Toast.makeText(getApplicationContext(), "Name must be filled", Toast.LENGTH_SHORT).show();
+                showAlertDialog("Name must be filled");
                 return;
             }
 
@@ -178,7 +180,6 @@ public class Registration extends AppCompatActivity {
                                 FirebaseUser user = refAuth.getCurrentUser();
                                 FBRef.getUser(user);
                                 uid = user.getUid();
-                                //** TO DO: add the programs he made himself **
                                 List<Training_Program> userPrograms = new ArrayList<>();
                                 userdb = new User(uid, name, userPrograms);
                                 Toast.makeText(Registration.this, "Successful registration", Toast.LENGTH_SHORT).show();
@@ -189,7 +190,7 @@ public class Registration extends AppCompatActivity {
                                     Toast.makeText(Registration.this, "User with e-mail already exist!", Toast.LENGTH_SHORT).show();
                                 else {
                                     Log.w("MainActivity", "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(Registration.this, "User create failed.", Toast.LENGTH_LONG).show();
+                                    showAlertDialog("User create failed.");
                                 }
                             }
                         }
@@ -201,5 +202,18 @@ public class Registration extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Removed activeYear logic from onActivityResult
+    }
+
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // You can add additional actions if needed
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

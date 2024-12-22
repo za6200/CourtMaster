@@ -1,5 +1,6 @@
 package com.example.courtmaster;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +58,7 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(Built_In_Programs.this, "Error loading programs", Toast.LENGTH_SHORT).show();
+                showAlertDialog("Error loading programs");
             }
         });
     }
@@ -78,5 +80,18 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
         ShowProgram = new Intent(Built_In_Programs.this, Show_Program.class);
         ShowProgram.putExtra("Training Program", clickedProgram);
         startActivity(ShowProgram);
+    }
+
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // You can add additional actions if needed
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

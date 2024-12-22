@@ -2,6 +2,7 @@ package com.example.courtmaster;
 
 import static java.lang.Integer.parseInt;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
@@ -75,19 +77,19 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
 
 
         if (exerciseName.isEmpty() || repeatText.isEmpty() || videoId.isEmpty() || description.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+            showAlertDialog("All fields must be filled");
             return;
         }
 
         int repeat = parseInt(repeatText);
 
         if (repeat <= 0 || repeat > 100) {
-            Toast.makeText(getApplicationContext(), "Repeat must be between 1 and 100", Toast.LENGTH_SHORT).show();
+            showAlertDialog("Repeat must be between 1 and 100");
             return;
         }
 
         if (counter > 5) {
-            Toast.makeText(getApplicationContext(), "Can't add more than 5 exercises", Toast.LENGTH_SHORT).show();
+            showAlertDialog("Can't add more than 5 exercises");
             return;
         }
 
@@ -101,7 +103,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         }
         if(PersonalProgram.getName().equals("Program Name") || PersonalProgram.getDescription().equals("Program Description"))
         {
-            Toast.makeText(getApplicationContext(), "Program Name and Description fields must be filled", Toast.LENGTH_SHORT).show();
+            showAlertDialog("Program Name and Description fields must be filled");
             return;
         }
         else {
@@ -130,21 +132,22 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         // Ensure all fields are checked before proceeding
         if (ProgramNameET.getText().toString().equals("Program Name") || ProgramDescriptionET.getText().toString().equals("Program Description")) {
 
-            Toast.makeText(getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+            showAlertDialog("All fields must be filled");
             return;
         }
         if(PersonalProgram.getProgram().isEmpty())
         {
-            Toast.makeText(getApplicationContext(), "No exercise added", Toast.LENGTH_SHORT).show();
+            showAlertDialog("No exercise added");
             return;
         }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
         databaseReference.child(PersonalProgram.getName()).setValue(PersonalProgram).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(getApplicationContext(), "Program added successfully!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Program added successfully!", Toast.LENGTH_SHORT).show();
+                showAlertDialog("Program added successfully!");
             } else {
-                Toast.makeText(getApplicationContext(), "Error adding program", Toast.LENGTH_SHORT).show();
+                showAlertDialog("Error adding program");
             }
         });
         Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
@@ -153,6 +156,18 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         ExRepeatET.setText("");
         ExVideoIdET.setText("");
         ExDescriptionET.setText("");
+    }
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // You can add additional actions if needed
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }
