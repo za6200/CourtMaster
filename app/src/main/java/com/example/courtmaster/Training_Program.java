@@ -8,6 +8,7 @@ public class Training_Program extends Exercise implements Serializable{
     private String name;
     private String description;
     private List<Exercise> program = new ArrayList<>();
+    private float rating;
 
     public Training_Program(){
 
@@ -43,7 +44,12 @@ public class Training_Program extends Exercise implements Serializable{
         this.description = description;
     }
 
-    public void addExercise(Exercise exercise) {
-        this.program.add(exercise);
+    public float getRating()
+    {
+        return this.rating;
+    }
+    public void setRating(float rating)
+    {
+        this.rating = rating;
     }
 }

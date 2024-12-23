@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -79,12 +80,12 @@ public class My_Programs extends AppCompatActivity implements AdapterView.OnItem
     }
 
     private void updateListView() {
-        List<String> programNames = new ArrayList<>();
+        List<Float> programRating = new ArrayList<>();
         for (Training_Program program : trainingProgramList) {
-            programNames.add(program.getName());
+            programRating.add(program.getRating());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, programNames);
+        ProgramAdapter adapter = new ProgramAdapter(this, trainingProgramList);
         ProgramList.setAdapter(adapter);
         ProgramList.setOnItemClickListener(this);
         waitingDialog.dismiss();
@@ -105,6 +106,12 @@ public class My_Programs extends AppCompatActivity implements AdapterView.OnItem
         Training_Program clickedProgram = trainingProgramList.get(position);
         ShowProgram = new Intent(My_Programs.this, Show_Program.class);
         ShowProgram.putExtra("Training Program", clickedProgram);
+        ShowProgram.putExtra("My program", true);
+        startActivity(ShowProgram);
+    }
+
+    public void go_back(View view) {
+        ShowProgram = new Intent(My_Programs.this, MainScreen.class);
         startActivity(ShowProgram);
     }
 }

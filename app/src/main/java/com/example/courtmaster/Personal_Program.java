@@ -36,7 +36,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     EditText ProgramNameET, ProgramDescriptionET, ExNameET, ExRepeatET, ExVideoIdET, ExDescriptionET;
     Button NextExerciseBtn, Finish;
     String exerciseName, repeatText, videoId, description;
-    int counter = 0;
+    int counter = 0, sureCheck = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,26 +182,11 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
             showAlertDialog("No exercise added");
             return;
         }
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
-        databaseReference.child(PersonalProgram.getName())
-                .setValue(PersonalProgram)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        loadCurrentUser();
-                    } else {
-                        showAlertDialog("Error adding program");
-                    }
-                });
-
-        Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
-        startActivity(MainScreen);
-
-        // Clear text fields
-        ExNameET.setText("");
-        ExRepeatET.setText("");
-        ExVideoIdET.setText("");
-        ExDescriptionET.setText("");
+        if(sureCheck < 1)
+        {
+            showSureAlertDialog("Are you sure you want to submit Program: " + PersonalProgram.getName());
+            sureCheck++;
+        }
     }
 
     private void showAlertDialog(String message) {
@@ -210,6 +195,43 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+    private void showSureAlertDialog(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
+                        databaseReference.child(PersonalProgram.getName())
+                                .setValue(PersonalProgram)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        loadCurrentUser();
+                                    } else {
+                                        showAlertDialog("Error adding program");
+                                    }
+                                });
+
+                        Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
+                        startActivity(MainScreen);
+
+                        // Clear text fields
+                        ExNameET.setText("");
+                        ExRepeatET.setText("");
+                        ExVideoIdET.setText("");
+                        ExDescriptionET.setText("");
+                    }
+                })
+                .setNeutralButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sureCheck = 0;
                     }
                 });
         AlertDialog alert = builder.create();

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -68,12 +69,12 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
     }
 
     private void addProgramsToAdapter() {
-        List<String> programNames = new ArrayList<>();
-        for (Training_Program program : trainingProgramList) {
-            programNames.add(program.getName());
+        List<Float> programsRating = new ArrayList<>();
+        for (Training_Program trainingProgram : trainingProgramList) {
+            programsRating.add(trainingProgram.getRating());
         }
 
-        ArrayAdapter<String> adp = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, programNames);
+        ProgramAdapter adp = new ProgramAdapter(this, trainingProgramList);
         ProgramList.setAdapter(adp);
         ProgramList.setOnItemClickListener(this);
     }
@@ -96,5 +97,10 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void go_back(View view) {
+        ShowProgram = new Intent(Built_In_Programs.this, MainScreen.class);
+        startActivity(ShowProgram);
     }
 }

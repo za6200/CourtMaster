@@ -5,80 +5,86 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_10"
+    android:orientation="vertical"
     tools:context=".Show_Program">
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:orientation="vertical">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.6" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/ProgramTV"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:maxLines="3"
-            android:text="text"
+            android:text=""
             android:textAlignment="center"
-            android:textColor="@color/quantum_orange800"
-            android:textSize="30sp"
+            android:textColor="@color/quantum_orange600"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/ExerciseDetails"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="15"
-            android:text="TextView"
-            android:textSize="24sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/youtubePlayer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="15"
-            app:videoId="" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/nextEx"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:onClick="nextExercise"
-            android:text="Next exercise"
-            android:textSize="20sp" />
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="Go Back"
+            android:layout_marginEnd="8dp"
+            android:onClick="go_back"
+            app:srcCompat="@drawable/img_2"
+            android:scaleType="centerInside"
+            app:tint="@color/quantum_orange600" />
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/ExerciseDetails"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:padding="16dp"
+        android:text="Exercise Details"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:lineSpacingExtra="4dp" />
+
     <Space
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <RatingBar
+        android:id="@+id/programRatingBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:background="@color/white"
+        android:numStars="3" />
+
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtubePlayer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        app:videoId="" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <Button
+        android:id="@+id/nextEx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:padding="12dp"
+        android:text="Next Exercise"
+        android:onClick="nextExercise"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
 </LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="@drawable/rounded_background_light">
+
+    <!-- Program Name -->
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+        android:layout_width="138dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:isIndicator="true"
+        android:numStars="3"
+        android:rating="3"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:stepSize="1" />
+
+    <TextView
+        android:id="@+id/listItemText"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="Program Name"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <!-- Smaller Read-Only RatingBar -->
+</LinearLayout>
