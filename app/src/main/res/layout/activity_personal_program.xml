@@ -177,6 +177,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/quantum_orange500"
                 android:foreground="?attr/selectableItemBackground"
+                android:onClick="nextEx"
                 android:text="Add Exercise"
                 android:textColor="@color/white" />
 
@@ -188,6 +189,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/quantum_orange500"
                 android:foreground="?attr/selectableItemBackground"
+                android:onClick="Finish"
                 android:text="Finish Program"
                 android:textColor="@color/white" />
         </LinearLayout>

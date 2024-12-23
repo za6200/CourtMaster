@@ -82,9 +82,19 @@ public class Show_Program extends AppCompatActivity {
     public void nextExercise(View view) {
         if (nextEx.getText().toString().equals("Submit Rating")) {
             float rating = programRatingBar.getRating();
-            trainingProgram.setRating(rating);
+            trainingProgram.getRatings().add(rating);
 
-            // Show a dialog to confirm the rating
+            float sum = 0f;
+            for (float r : trainingProgram.getRatings()) {
+                sum += r;
+            }
+            float average = sum / (trainingProgram.getRatings().size() - 1);
+
+            trainingProgram.setRating(average);
+            DatabaseReference programsRef = FirebaseDatabase.getInstance().getReference("TrainingPrograms").child(trainingProgram.getName());
+            programsRef.child("rating").setValue(average);
+            programsRef.child("ratings").setValue(trainingProgram.getRatings());
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Thank you for rating " + trainingProgram.getName() + " program\n\nRate: " + rating + "/3")
                     .setCancelable(false)
@@ -95,9 +105,6 @@ public class Show_Program extends AppCompatActivity {
                             startActivity(BuiltIn);
                         }
                     });
-            trainingProgram.setRating(rating);
-            DatabaseReference programsRef = FirebaseDatabase.getInstance().getReference("TrainingPrograms").child(trainingProgram.getName()).child("rating");
-            programsRef.setValue(rating);
             AlertDialog alert = builder.create();
             alert.show();
         } else if (position + 1 < trainingProgram.getProgram().size()) {
@@ -139,7 +146,7 @@ public class Show_Program extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         position = 0;
                         updateExerciseDetails();
-                        loadCurrentVideo(); // Load the first video
+                        loadCurrentVideo();
                     }
                 })
                 .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {

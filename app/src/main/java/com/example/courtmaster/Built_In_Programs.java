@@ -69,10 +69,12 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
     }
 
     private void addProgramsToAdapter() {
-        List<Float> programsRating = new ArrayList<>();
+        /*List<Float> programsRating = new ArrayList<>();
+        int i = 0;
         for (Training_Program trainingProgram : trainingProgramList) {
             programsRating.add(trainingProgram.getRating());
-        }
+            i++;
+        }*/
 
         ProgramAdapter adp = new ProgramAdapter(this, trainingProgramList);
         ProgramList.setAdapter(adp);

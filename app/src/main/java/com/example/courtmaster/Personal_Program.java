@@ -72,62 +72,6 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         }
     }
 
-    public void Next_Exercise(View view) {
-
-        exerciseName = ExNameET.getText().toString();
-        repeatText = ExRepeatET.getText().toString();
-        videoId = ExVideoIdET.getText().toString();
-        description = ExDescriptionET.getText().toString();
-
-
-
-        if (exerciseName.isEmpty() || repeatText.isEmpty() || description.isEmpty()) {
-            showAlertDialog("All Required fields must be filled");
-            return;
-        }
-
-        int repeat = parseInt(repeatText);
-
-        if (repeat <= 0 || repeat > 100) {
-            showAlertDialog("Repeat must be between 1 and 100");
-            return;
-        }
-
-        if (counter > 5) {
-            showAlertDialog("Can't add more than 5 exercises");
-            return;
-        }
-
-        exercise = new Exercise(exerciseName, repeat, Levels[LevelSpin.getSelectedItemPosition()], videoId, description);
-
-        // Set the PersonalProgram name and description only once
-        if (counter == 0) {
-            if (ProgramNameET.getText().toString().equals("Program Name") || ProgramNameET.getText().toString().equals("") || ProgramDescriptionET.getText().toString().equals("Program Description") || ProgramDescriptionET.getText().toString().equals("")) {
-                showAlertDialog("All Required fields must be filled");
-                return;
-            }
-            PersonalProgram.setName(ProgramNameET.getText().toString());
-            PersonalProgram.setDescription(ProgramDescriptionET.getText().toString());
-            PersonalProgramTV.setText(ProgramNameET.getText().toString());
-        }
-        if(PersonalProgram.getName().equals("Program Name") || PersonalProgram.getDescription().equals("Program Description"))
-        {
-            showAlertDialog("Program Name and Description fields must be filled");
-            return;
-        }
-        else {
-            ProgramNameET.setVisibility(View.INVISIBLE);
-            ProgramDescriptionET.setVisibility(View.INVISIBLE);
-        }
-
-        PersonalProgram.getProgram().add(exercise);
-        ExNameET.setText("");
-        ExRepeatET.setText("");
-        ExVideoIdET.setText("");
-        ExDescriptionET.setText("");
-        counter++;
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
     }
@@ -241,5 +185,60 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     public void go_back(View view) {
         Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
         startActivity(MainScreen);
+    }
+
+    public void nextEx(View view) {
+        exerciseName = ExNameET.getText().toString();
+        repeatText = ExRepeatET.getText().toString();
+        videoId = ExVideoIdET.getText().toString();
+        description = ExDescriptionET.getText().toString();
+
+
+
+        if (exerciseName.isEmpty() || repeatText.isEmpty() || description.isEmpty()) {
+            showAlertDialog("All Required fields must be filled");
+            return;
+        }
+
+        int repeat = parseInt(repeatText);
+
+        if (repeat <= 0 || repeat > 100) {
+            showAlertDialog("Repeat must be between 1 and 100");
+            return;
+        }
+
+        if (counter > 5) {
+            showAlertDialog("Can't add more than 5 exercises");
+            return;
+        }
+
+        exercise = new Exercise(exerciseName, repeat, Levels[LevelSpin.getSelectedItemPosition()], videoId, description);
+
+        // Set the PersonalProgram name and description only once
+        if (counter == 0) {
+            if (ProgramNameET.getText().toString().equals("Program Name") || ProgramNameET.getText().toString().equals("") || ProgramDescriptionET.getText().toString().equals("Program Description") || ProgramDescriptionET.getText().toString().equals("")) {
+                showAlertDialog("All Required fields must be filled");
+                return;
+            }
+            PersonalProgram.setName(ProgramNameET.getText().toString());
+            PersonalProgram.setDescription(ProgramDescriptionET.getText().toString());
+            PersonalProgramTV.setText(ProgramNameET.getText().toString());
+        }
+        if(PersonalProgram.getName().equals("Program Name") || PersonalProgram.getDescription().equals("Program Description"))
+        {
+            showAlertDialog("Program Name and Description fields must be filled");
+            return;
+        }
+        else {
+            ProgramNameET.setVisibility(View.INVISIBLE);
+            ProgramDescriptionET.setVisibility(View.INVISIBLE);
+        }
+
+        PersonalProgram.getProgram().add(exercise);
+        ExNameET.setText("");
+        ExRepeatET.setText("");
+        ExVideoIdET.setText("");
+        ExDescriptionET.setText("");
+        counter++;
     }
 }

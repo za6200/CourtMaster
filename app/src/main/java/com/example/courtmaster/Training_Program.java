@@ -9,15 +9,20 @@ public class Training_Program extends Exercise implements Serializable{
     private String description;
     private List<Exercise> program = new ArrayList<>();
     private float rating;
+    private List<Float> ratings = new ArrayList<>();
 
     public Training_Program(){
-
+        this.program = new ArrayList<>();
+        this.ratings = new ArrayList<>();
+        this.ratings.add(0f);
     }
-    public Training_Program(String name, String description,List<Exercise> program)
+    public Training_Program(String name, String description,List<Exercise> program, float rating, List<Float> ratings)
     {
         this.name = name;
         this.description = description;
         this.program = program;
+        this.rating = rating;
+        this.ratings = ratings;
     }
     public String getName()
     {
@@ -42,6 +47,19 @@ public class Training_Program extends Exercise implements Serializable{
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public List<Float> getRatings()
+    {
+        return this.ratings;
+    }
+    public void addRating(float rating)
+    {
+        this.ratings.add(rating);
+    }
+    public void setRatings(List<Float> ratings)
+    {
+        this.ratings = ratings;
     }
 
     public float getRating()
