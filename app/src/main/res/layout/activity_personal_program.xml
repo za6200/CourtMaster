@@ -1,230 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:background="@drawable/personal"
+    android:padding="16dp"
     tools:context=".Personal_Program">
 
+    <!-- Side spacing -->
     <Space
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="0.5" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="12"
+        android:layout_weight="10"
         android:orientation="vertical">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
+        <!-- Top spacing -->
 
-        <TextView
-            android:id="@+id/PersonalProgramTV"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            android:gravity="center"
-            android:text="Personal Program"
-            android:textColor="@color/quantum_purple600"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
+        <!-- Title with Back Arrow -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.1" />
-
-                <EditText
-                    android:id="@+id/ProgramNameET"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="8"
-                    android:ems="10"
-                    android:hint="Program Name"
-                    android:inputType="text"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.1" />
-
-                <EditText
-                    android:id="@+id/ProgramDescriptionET"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="8"
-                    android:ems="10"
-                    android:hint="Program Description"
-                    android:inputType="text"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="12"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="12"
-                android:orientation="vertical">
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5" />
+                android:layout_weight="4"
+                android:background="@color/quantum_bluegrey500"
+                android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/ExNumberTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:id="@+id/PersonalProgramTV"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Exercise Details"
-                    android:textColor="@color/quantum_orange500"
+                    android:padding="8dp"
+                    android:text="Personal Program"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/ExNameET"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5"
-                    android:ems="10"
-                    android:hint="Exercise Name"
-                    android:inputType="text"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/LevelTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="2"
-                    android:text="Select Level:"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <Spinner
-                    android:id="@+id/LevelSpin"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/ExRepeatET"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5"
-                    android:ems="10"
-                    android:hint="Repeat"
-                    android:inputType="numberSigned"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/ExVideoIdET"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5"
-                    android:ems="10"
-                    android:hint="Video Id (youtube) (optional)"
-                    android:inputType="text"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <EditText
-                    android:id="@+id/ExDescriptionET"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="8"
-                    android:ems="10"
-                    android:hint="Description"
-                    android:inputType="text"
-                    android:textSize="24sp" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/NextExerciseBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="4"
-                    android:onClick="Next_Exercise"
-                    android:text="Add Exercise"
-                    android:textSize="24sp" />
-
-                <Button
-                    android:id="@+id/Finish"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="Finish"
-                    android:text="Finish Program"
-                    android:textSize="24sp" />
+                <ImageButton
+                    android:id="@+id/goBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="Go Back"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="go_back"
+                    app:srcCompat="@drawable/img_2"
+                    android:scaleType="centerInside"
+                    app:tint="@color/quantum_orange600" />
 
             </LinearLayout>
         </LinearLayout>
 
-        <Space
+        <!-- Program Details Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="1.6"
+            android:alpha="0.9"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <EditText
+                android:id="@+id/ProgramNameET"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.6"
+                android:hint="Program Name"
+                android:inputType="text"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ProgramDescriptionET"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:hint="Program Description"
+                android:inputType="text"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <!-- Exercise Details Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:alpha="0.9"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/ExNumberTV"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Exercise Details"
+                android:textColor="@color/quantum_orange500"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ExNameET"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:hint="Exercise Name"
+                android:inputType="text"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/LevelSpin"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.3" />
+
+            <EditText
+                android:id="@+id/ExRepeatET"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:hint="Repeat"
+                android:inputType="number"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ExVideoIdET"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:hint="Video ID (YouTube) (Optional)"
+                android:inputType="text"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ExDescriptionET"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:hint="Description"
+                android:inputType="text"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <!-- Buttons Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/NextExerciseBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange500"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="Add Exercise"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/Finish"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/quantum_orange500"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="Finish Program"
+                android:textColor="@color/white" />
+        </LinearLayout>
     </LinearLayout>
 
+    <!-- Side spacing -->
     <Space
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="0.5" />
 </LinearLayout>

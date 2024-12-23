@@ -238,4 +238,8 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
         alert.show();
     }
 
+    public void go_back(View view) {
+        Intent MainScreen = new Intent(Personal_Program.this, MainScreen.class);
+        startActivity(MainScreen);
+    }
 }
