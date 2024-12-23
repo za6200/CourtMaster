@@ -72,7 +72,7 @@ public class Registration extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        boolean isChecked = settings.getBoolean("stayConnect", false);
+        boolean isChecked = settings.getBoolean("Remain linked", false);
         if (refAuth.getCurrentUser() != null && isChecked) {
             FBRef.getUser(refAuth.getCurrentUser());
             stayConnect = true;
@@ -137,7 +137,7 @@ public class Registration extends AppCompatActivity {
                         Toast.makeText(Registration.this, "Login Success!", Toast.LENGTH_SHORT).show();
 
                         SharedPreferences.Editor editor = settings.edit();
-                        editor.putBoolean("stayConnect", cBstayconnect.isChecked());
+                        editor.putBoolean("Remain linked", cBstayconnect.isChecked());
                         editor.apply();
 
                         Intent mainScreenIntent = new Intent(Registration.this, MainScreen.class);
@@ -188,7 +188,7 @@ public class Registration extends AppCompatActivity {
                                             Log.d(TAG, "createUserWithEmail: success");
 
                                             SharedPreferences.Editor editor = settings.edit();
-                                            editor.putBoolean("stayConnect", cBstayconnect.isChecked());
+                                            editor.putBoolean("Remain linked", cBstayconnect.isChecked());
                                             editor.apply();
 
                                             startActivity(new Intent(Registration.this, MainScreen.class));
