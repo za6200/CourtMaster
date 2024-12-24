@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@drawable/background1"
+    android:background="@drawable/main_screen"
+    android:padding="16dp"
     tools:context=".MainScreen">
 
     <Space
@@ -29,17 +30,17 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:gravity="center"
             android:text="Main Screen"
             android:textColor="@color/quantum_purpleA200"
-            android:textColorLink="#dd6750b4"
-            android:textSize="40sp" />
+            android:textSize="36sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4" />
+            android:layout_weight="0.1" />
 
         <Button
             android:id="@+id/trainBt"
@@ -47,13 +48,13 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:onClick="train"
-            android:text="Built in program"
-            android:textSize="26sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
+            android:text="Built-in Program"
+            android:textSize="18sp"
+            android:backgroundTint="@color/quantum_bluegrey600"
+            android:textColor="@android:color/white"
+            android:elevation="4dp"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/personalBt"
@@ -62,12 +63,12 @@
             android:layout_weight="0.5"
             android:onClick="Personal_Program"
             android:text="Personal Program"
-            android:textSize="27sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
+            android:textSize="18sp"
+            android:backgroundTint="@color/quantum_orange600"
+            android:textColor="@android:color/white"
+            android:elevation="4dp"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/courtsBt"
@@ -75,13 +76,13 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:onClick="FindCourts"
-            android:text="Find courts"
-            android:textSize="29sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
+            android:text="Find Courts"
+            android:textSize="18sp"
+            android:backgroundTint="@color/quantum_googgreen700"
+            android:textColor="@android:color/white"
+            android:elevation="4dp"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/button"
@@ -90,7 +91,11 @@
             android:layout_weight="0.5"
             android:onClick="Programs"
             android:text="My Programs"
-            android:textSize="29sp" />
+            android:textSize="18sp"
+            android:backgroundTint="@color/quantum_purpleA200"
+            android:textColor="@android:color/white"
+            android:elevation="4dp"
+            android:padding="10dp" />
 
         <Space
             android:layout_width="match_parent"
@@ -102,4 +107,5 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
+
 </LinearLayout>

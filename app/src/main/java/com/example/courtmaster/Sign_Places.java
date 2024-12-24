@@ -316,4 +316,9 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    public void go_back(View view) {
+        Intent MainScreen = new Intent(Sign_Places.this, MainScreen.class);
+        startActivity(MainScreen);
+    }
 }

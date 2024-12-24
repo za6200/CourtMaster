@@ -39,6 +39,19 @@
                 android:background="@color/quantum_bluegrey500"
                 android:gravity="center_vertical">
 
+                <ImageButton
+                    android:id="@+id/goBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="Go Back"
+                    android:onClick="go_back"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/img_2"
+                    app:tint="@color/quantum_orange600" />
+
                 <TextView
                     android:id="@+id/PersonalProgramTV"
                     android:layout_width="0dp"
@@ -50,19 +63,6 @@
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/goBack"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:contentDescription="Go Back"
-                    android:layout_marginEnd="8dp"
-                    android:onClick="go_back"
-                    app:srcCompat="@drawable/img_2"
-                    android:scaleType="centerInside"
-                    app:tint="@color/quantum_orange600" />
 
             </LinearLayout>
         </LinearLayout>

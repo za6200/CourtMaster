@@ -17,6 +17,7 @@ public class User extends Training_Program {
         this.uid = uid;
         this.username = username;
         this.program = new ArrayList<>();
+
     }
 
     public String getUid() {
