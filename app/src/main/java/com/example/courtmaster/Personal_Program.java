@@ -119,7 +119,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     }
 
     public void Finish(View view) {
-        if (ProgramNameET.getText().toString().equals("Program Name") || ProgramNameET.getText().toString().equals("") || ProgramDescriptionET.getText().toString().equals("Program Description") || ProgramDescriptionET.getText().toString().equals("")) {
+        if (ProgramNameET.getText().toString().equals("Program Name") || ProgramNameET.getText().toString().isEmpty() || ProgramDescriptionET.getText().toString().equals("Program Description") || ProgramDescriptionET.getText().toString().isEmpty()) {
             showAlertDialog("All Required fields must be filled");
             return;
         } else if (PersonalProgram.getProgram().isEmpty()) {
