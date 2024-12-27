@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -12,6 +13,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.google.android.libraries.places.api.Places;
 import org.json.JSONArray;
@@ -21,6 +25,7 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
@@ -39,6 +44,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
@@ -52,6 +62,9 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Intent GPS, Video, Registration;
     private ProgressDialog Retrivieving_Location;
+    AlertDialog.Builder adb;
+    ConstraintLayout court_info;
+    EditText etFacilities, etCourtName;
 
 
     private static final String TAG = "Sign_Places";
@@ -61,6 +74,11 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_places);
 
+        court_info = (ConstraintLayout) getLayoutInflater().inflate(R.layout.court_info, null);
+        etCourtName = (EditText) court_info.findViewById(R.id.etCourtName);
+        etFacilities = (EditText) court_info.findViewById(R.id.etFacilities);
+
+        CreateDialog();
         mapView = findViewById(R.id.mapView);
         if (mapView != null) {
             Bundle mapViewBundle = null;
@@ -96,6 +114,42 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    public void CreateDialog()
+    {
+        adb = new AlertDialog.Builder(this);
+        adb.setView(court_info);
+        court_info.setBackgroundColor(Color.YELLOW);
+        adb.setTitle("New Court Info");
+        adb.setNegativeButton("Add Court", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                    String courtName = etCourtName.getText().toString();
+                    String facilities = etFacilities.getText().toString();
+
+                    Location location = new Location("");
+                    location.setLatitude(latitude);
+                    location.setLongitude(longitude);
+
+                    String courtId = FBRef.refCourts.push().getKey();
+                    Court court = new Court(courtId, latitude, longitude, courtName, facilities);
+
+                    FBRef.refCourts.child(courtId).setValue(court).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Sign_Places.this, "Added court", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            showAlertDialog("Add Court failed");
+                        }
+                    });
+                }
+        }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -176,9 +230,8 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
 
                         String status = response.getString("status");
                         if (!status.equals("OK")) {
-                            String errorMessage = response.optString("error_message", "Unknown error");
-                            Log.e(TAG, "API Error: " + status + " - " + errorMessage);
-                            showAlertDialog("API Error: " + status + " - " + errorMessage);
+
+                            showAlertDialog("API Error: " + status);
                             return;
                         }
 
@@ -190,16 +243,36 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                         for (int i = 0; i < results.length(); i++) {
                             JSONObject place = results.getJSONObject(i);
 
-                            // Get place details
+                            // get place details
                             String placeName = place.getString("name");
                             JSONObject location = place.getJSONObject("geometry").getJSONObject("location");
                             double lat = location.getDouble("lat");
                             double lng = location.getDouble("lng");
 
-                            // Add a marker for each place found
+                            // add a marker for each place found
                             LatLng placeLatLng = new LatLng(lat, lng);
                             mMap.addMarker(new MarkerOptions().position(placeLatLng).title(placeName));
                         }
+
+                        FBRef.refCourts.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot courtSnapshot : snapshot.getChildren()) {
+                                    Court court = courtSnapshot.getValue(Court.class);
+                                    if (court != null && court.getLatitude() != 0.0 && court.getLongitude() != 0.0) {
+                                        double lat = court.getLatitude();
+                                        double lng = court.getLongitude();
+                                        LatLng courtLatLng = new LatLng(lat, lng);
+                                        mMap.addMarker(new MarkerOptions().position(courtLatLng).title(court.getCourtName() + " " + court.getFacilities()));
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
                         Toast.makeText(this, "Nearby basketball places added to the map.", Toast.LENGTH_SHORT).show();
 
@@ -218,13 +291,11 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-
-
     public void Find_Place(View view) {
         fetchBasketballPlaces();
     }
 
-    // MapView lifecycle methods
+    // lifecycle for the map
     @Override
     protected void onStart() {
         super.onStart();
@@ -270,7 +341,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    // Handle permissions result
+    // permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -289,20 +360,18 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
             }
         }
     }
-    // Deprecated methods (can be left empty)
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        // Deprecated method
     }
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
-        // Optionally handle provider enabled
+
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
-        // Optionally handle provider disabled
+
     }
 
     private void showAlertDialog(String message) {
@@ -320,5 +389,12 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     public void go_back(View view) {
         Intent MainScreen = new Intent(Sign_Places.this, MainScreen.class);
         startActivity(MainScreen);
+    }
+
+    public void addCourt(View view) {
+        if (court_info.getParent() != null) {
+            ((ViewGroup) court_info.getParent()).removeView(court_info);
+        }
+        adb.show();
     }
 }

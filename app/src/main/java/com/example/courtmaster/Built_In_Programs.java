@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,7 +49,7 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
 
         programsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 trainingProgramList.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -62,19 +63,13 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 showAlertDialog("Error loading programs");
             }
         });
     }
 
     private void addProgramsToAdapter() {
-        /*List<Float> programsRating = new ArrayList<>();
-        int i = 0;
-        for (Training_Program trainingProgram : trainingProgramList) {
-            programsRating.add(trainingProgram.getRating());
-            i++;
-        }*/
 
         ProgramAdapter adp = new ProgramAdapter(this, trainingProgramList);
         ProgramList.setAdapter(adp);

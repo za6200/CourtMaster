@@ -82,9 +82,9 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
 
     private void loadCurrentUser() {
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUid);
+        DatabaseReference refUsers = FirebaseDatabase.getInstance().getReference("Users").child(currentUid);
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        refUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user;
@@ -102,7 +102,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
 
                 user.getPrograms().add(PersonalProgram);
 
-                userRef.setValue(user).addOnCompleteListener(task -> {
+                refUsers.setValue(user).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         showAlertDialog("Program added to user successfully!");
                     } else {

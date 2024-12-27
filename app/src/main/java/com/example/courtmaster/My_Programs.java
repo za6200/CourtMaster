@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -80,15 +81,10 @@ public class My_Programs extends AppCompatActivity implements AdapterView.OnItem
     }
 
     private void updateListView() {
-        List<Float> programRating = new ArrayList<>();
-        for (Training_Program program : trainingProgramList) {
-            programRating.add(program.getRating());
-        }
-
-        ProgramAdapter adapter = new ProgramAdapter(this, trainingProgramList);
-        ProgramList.setAdapter(adapter);
+        ProgramAdapter adp = new ProgramAdapter(this, trainingProgramList);
+        Toast.makeText(this, "rating: " + trainingProgramList.get(0).getRating(), Toast.LENGTH_SHORT).show();
+        ProgramList.setAdapter(adp);
         ProgramList.setOnItemClickListener(this);
-        waitingDialog.dismiss();
     }
 
     private void showAlertDialog(String message) {

@@ -151,8 +151,15 @@ public class Show_Program extends AppCompatActivity {
                 })
                 .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent PersonalTraining = new Intent(Show_Program.this, Built_In_Programs.class);
-                        startActivity(PersonalTraining);
+                        if(MyProgram)
+                        {
+                            Intent MyPrograms = new Intent(Show_Program.this, My_Programs.class);
+                            startActivity(MyPrograms);
+                        }
+                        else {
+                            Intent PersonalTraining = new Intent(Show_Program.this, Built_In_Programs.class);
+                            startActivity(PersonalTraining);
+                        }
                     }
                 })
                 .setPositiveButton("Submit Rating", new DialogInterface.OnClickListener() {
@@ -173,7 +180,14 @@ public class Show_Program extends AppCompatActivity {
     }
 
     public void go_back(View view) {
-        Intent BuiltIn = new Intent(Show_Program.this, Built_In_Programs.class);
-        startActivity(BuiltIn);
+        if(MyProgram)
+        {
+            Intent MyPrograms = new Intent(Show_Program.this, My_Programs.class);
+            startActivity(MyPrograms);
+        }
+        else {
+            Intent BuiltIn = new Intent(Show_Program.this, Built_In_Programs.class);
+            startActivity(BuiltIn);
+        }
     }
 }
