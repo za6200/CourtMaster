@@ -54,8 +54,7 @@ public class Show_Program extends AppCompatActivity {
 
         programRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
             if (fromUser) {
-                Toast.makeText(this, "Rating: " + rating, Toast.LENGTH_SHORT).show();
-                // Add additional logic here if needed
+
             }
         });
 

@@ -70,7 +70,7 @@
 
         <RatingBar
             android:id="@+id/programRatingBar"
-            android:layout_width="294dp"
+            android:layout_width="281dp"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:fadingEdgeLength="@dimen/cardview_compat_inset_shadow"
