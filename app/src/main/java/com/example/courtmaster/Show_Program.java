@@ -33,6 +33,7 @@ public class Show_Program extends AppCompatActivity {
     YouTubePlayer activeYouTubePlayer = null;
     YouTubePlayerView youTubePlayerView;
     boolean MyProgram, DataChange, rated;
+    int exNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class Show_Program extends AppCompatActivity {
         MyProgram = programInfo.getBooleanExtra("My program", false);
         ProgramTV.setText(trainingProgram.getName());
         position = 0;
+        exNum = 0;
         DataChange = false;
         rated = false;
 
@@ -86,7 +88,11 @@ public class Show_Program extends AppCompatActivity {
     }
 
     public void nextExercise(View view) {
+        exNum++;
+        if (exNum == trainingProgram.getProgram().size()-1) {
+            nextEx.setText("Finish Program");
 
+        }
         if (nextEx.getText().toString().equals("Submit Rating")) {
             float rating = programRatingBar.getRating();
             trainingProgram.getRatings().add(rating);
@@ -132,7 +138,7 @@ public class Show_Program extends AppCompatActivity {
             position++;
             updateExerciseDetails();
             loadCurrentVideo(); // Load the video for the new exercise
-        } else {
+        }  else {
             showAlertDialog("Training Program Ended");
         }
     }
