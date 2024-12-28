@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
@@ -164,7 +165,13 @@ public class Show_Program extends AppCompatActivity {
                 })
                 .setPositiveButton("Submit Rating", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         if(MyProgram)
+                        {
+                            normalShowAlertDialog("Can't rate yourself");
+                            return;
+                        }
+                        else if(trainingProgram.getCreator().equals(currentUid))
                         {
                             normalShowAlertDialog("Can't rate yourself");
                             return;

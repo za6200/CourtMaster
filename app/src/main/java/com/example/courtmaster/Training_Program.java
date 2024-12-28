@@ -7,22 +7,24 @@ import java.io.Serializable;
 public class Training_Program extends Exercise implements Serializable{
     private String name;
     private String description;
-    private List<Exercise> program = new ArrayList<>();
+    private List<Exercise> program;
     private float rating;
-    private List<Float> ratings = new ArrayList<>();
+    private List<Float> ratings;
+    private String creator;
 
     public Training_Program(){
         this.program = new ArrayList<>();
         this.ratings = new ArrayList<>();
         this.ratings.add(0f);
     }
-    public Training_Program(String name, String description,List<Exercise> program, float rating, List<Float> ratings)
+    public Training_Program(String name, String description,List<Exercise> program, float rating, List<Float> ratings, String creator)
     {
         this.name = name;
         this.description = description;
         this.program = program;
         this.rating = rating;
         this.ratings = ratings;
+        this.creator = creator;
     }
     public String getName()
     {
@@ -69,5 +71,14 @@ public class Training_Program extends Exercise implements Serializable{
     public void setRating(float rating)
     {
         this.rating = rating;
+    }
+
+    public String getCreator()
+    {
+        return this.creator;
+    }
+    public void setCreator(String creator)
+    {
+        this.creator = creator;
     }
 }

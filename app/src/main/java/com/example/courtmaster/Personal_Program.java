@@ -83,39 +83,7 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
     private void loadCurrentUser() {
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference refUsers = FirebaseDatabase.getInstance().getReference("Users").child(currentUid);
-
-        refUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user;
-                if (snapshot.exists()) {
-                    // Existing user
-                    user = snapshot.getValue(User.class);
-                } else {
-                    user = new User();
-                    user.setUid(currentUid);
-                }
-
-                if (user.getPrograms() == null) {
-                    user.setPrograms(new ArrayList<>());
-                }
-
-                user.getPrograms().add(PersonalProgram);
-
-                refUsers.setValue(user).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        showAlertDialog("Program added to user successfully!");
-                    } else {
-                        showAlertDialog("Error updating user with new program.");
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                showAlertDialog("User load cancelled: " + error.getMessage());
-            }
-        });
+        PersonalProgram.setCreator(currentUid);
     }
 
     public void Finish(View view) {
@@ -126,11 +94,38 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
             showAlertDialog("No exercise added");
             return;
         }
-        if(sureCheck < 1)
-        {
-            showSureAlertDialog("Are you sure you want to submit Program: " + PersonalProgram.getName());
-            sureCheck++;
-        }
+        FBRef.refTrainingPrograms.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean nameExists = false;
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Training_Program existingProgram = snapshot.getValue(Training_Program.class);
+
+                    if (existingProgram != null && existingProgram.getName().equalsIgnoreCase(ProgramNameET.getText().toString())) {
+                        nameExists = true;
+                        break;
+                    }
+                }
+
+                if (nameExists) {
+                    showAlertDialog("A program with this name already exists. Please choose a different name.");
+                    ProgramNameET.setVisibility(View.VISIBLE);
+
+                }
+
+                else if(sureCheck < 1) {
+                    PersonalProgram.setName(ProgramNameET.getText().toString());
+                    showSureAlertDialog("Are you sure you want to submit Program: " + PersonalProgram.getName());
+                    sureCheck++;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void showAlertDialog(String message) {
@@ -151,13 +146,12 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
                 .setCancelable(false)
                 .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        loadCurrentUser();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
                         databaseReference.child(PersonalProgram.getName())
                                 .setValue(PersonalProgram)
                                 .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        loadCurrentUser();
-                                    } else {
+                                    if (!task.isSuccessful()) {
                                         showAlertDialog("Error adding program");
                                     }
                                 });

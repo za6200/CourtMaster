@@ -48,9 +48,7 @@ public class My_Programs extends AppCompatActivity implements AdapterView.OnItem
     private void loadUserPrograms() {
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DatabaseReference programsRef = FirebaseDatabase.getInstance().getReference("Users")
-                .child(currentUid)
-                .child("programs");
+        DatabaseReference programsRef = FirebaseDatabase.getInstance().getReference("TrainingPrograms");
 
         programsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -59,7 +57,7 @@ public class My_Programs extends AppCompatActivity implements AdapterView.OnItem
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Training_Program trainingProgram = snapshot.getValue(Training_Program.class);
-                    if (trainingProgram != null) {
+                    if (trainingProgram.getCreator().equals(currentUid)) {
                         trainingProgramList.add(trainingProgram);
                     }
                 }
@@ -82,7 +80,6 @@ public class My_Programs extends AppCompatActivity implements AdapterView.OnItem
 
     private void updateListView() {
         ProgramAdapter adp = new ProgramAdapter(this, trainingProgramList);
-        Toast.makeText(this, "rating: " + trainingProgramList.get(0).getRating(), Toast.LENGTH_SHORT).show();
         ProgramList.setAdapter(adp);
         ProgramList.setOnItemClickListener(this);
     }

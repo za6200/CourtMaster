@@ -6,20 +6,18 @@ import java.util.List;
 public class User extends Training_Program {
     private String uid;
     private String username;
-    private List<Training_Program> program;
-    private List<Training_Program> ratedPrograms;
 
 
     public User() {
-        this.program = new ArrayList<>();
-        this.ratedPrograms = new ArrayList<>();
+        //this.program = new ArrayList<>();
+        //this.ratedPrograms = new ArrayList<>();
     }
 
     public User(String uid, String username, List<Training_Program> program, List<Training_Program> ratedPrograms) {
         this.uid = uid;
         this.username = username;
-        this.program = new ArrayList<>();
-        this.ratedPrograms = new ArrayList<>();
+        //this.program = new ArrayList<>();
+        //this.ratedPrograms = new ArrayList<>();
     }
 
     public String getUid() {
@@ -38,7 +36,7 @@ public class User extends Training_Program {
         this.username = username;
     }
 
-    public List<Training_Program> getPrograms()
+    /*public List<Training_Program> getPrograms()
     {
         return this.program;
     }
@@ -54,5 +52,5 @@ public class User extends Training_Program {
     public void setRatedPrograms(List<Training_Program> program)
     {
         this.ratedPrograms = ratedPrograms;
-    }
+    }*/
 }
