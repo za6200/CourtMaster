@@ -318,6 +318,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
 
     public void Find_Place(View view) {
         fetchBasketballPlaces();
+
     }
 
     // lifecycle for the map
@@ -425,6 +426,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
             if (!isClose) {
                 adb.show();
             }
+            FindCourt = false;
         }
         else {
             showAlertDialog("Press Find Courts first!");
