@@ -50,6 +50,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
@@ -65,6 +68,8 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     AlertDialog.Builder adb;
     ConstraintLayout court_info;
     EditText etFacilities, etCourtName;
+    boolean isClose = false, FindCourt = false;
+    List<LatLng> courtsLocation = new ArrayList<>();
 
 
     private static final String TAG = "Sign_Places";
@@ -78,7 +83,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
         etCourtName = (EditText) court_info.findViewById(R.id.etCourtName);
         etFacilities = (EditText) court_info.findViewById(R.id.etFacilities);
 
-        CreateDialog();
+
         mapView = findViewById(R.id.mapView);
         if (mapView != null) {
             Bundle mapViewBundle = null;
@@ -116,6 +121,22 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
 
     public void CreateDialog()
     {
+        for(int l = 0; l<courtsLocation.size();l++)
+        {
+            Location location = new Location("");
+            location.setLatitude(courtsLocation.get(l).latitude);
+            location.setLongitude(courtsLocation.get(l).longitude);
+            Location location2 = new Location("");
+            location2.setLatitude(latitude);
+            location2.setLongitude(longitude);
+
+            if(location.distanceTo(location2) < 100)
+            {
+                showAlertDialog("There is already a court nearby!");
+                isClose = true;
+                return;
+            }
+        }
         adb = new AlertDialog.Builder(this);
         adb.setView(court_info);
         court_info.setBackgroundColor(Color.YELLOW);
@@ -217,7 +238,8 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
                 + "?location=" + latitude + "," + longitude
                 + "&radius=" + radiusInMeters
-                + "&keyword=basketball"
+                + "&keyword=basketball+court"
+                + "&type=sports_complex"
                 + "&key=" + apiKey;
 
         Log.d(TAG, "Fetching basketball places with URL: " + url);
@@ -251,6 +273,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
 
                             // add a marker for each place found
                             LatLng placeLatLng = new LatLng(lat, lng);
+                            courtsLocation.add(placeLatLng);
                             mMap.addMarker(new MarkerOptions().position(placeLatLng).title(placeName));
                         }
 
@@ -263,6 +286,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                                         double lat = court.getLatitude();
                                         double lng = court.getLongitude();
                                         LatLng courtLatLng = new LatLng(lat, lng);
+                                        courtsLocation.add(courtLatLng);
                                         mMap.addMarker(new MarkerOptions().position(courtLatLng).title(court.getCourtName() + " " + court.getFacilities()));
                                     }
                                 }
@@ -275,6 +299,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                         });
 
                         Toast.makeText(this, "Nearby basketball places added to the map.", Toast.LENGTH_SHORT).show();
+                        FindCourt = true;
 
                     } catch (JSONException e) {
                         Log.e(TAG, "JSON parsing error: ", e);
@@ -392,9 +417,17 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void addCourt(View view) {
-        if (court_info.getParent() != null) {
-            ((ViewGroup) court_info.getParent()).removeView(court_info);
+        if(FindCourt) {
+            CreateDialog();
+            if (court_info.getParent() != null) {
+                ((ViewGroup) court_info.getParent()).removeView(court_info);
+            }
+            if (!isClose) {
+                adb.show();
+            }
         }
-        adb.show();
+        else {
+            showAlertDialog("Press Find Courts first!");
+        }
     }
 }
