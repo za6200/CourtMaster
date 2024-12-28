@@ -12,8 +12,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -81,6 +84,26 @@ public class Show_Program extends AppCompatActivity {
     }
 
     public void nextExercise(View view) {
+        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        userRef.child(currentUid).child("programs").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.getChildren().toString().equals(trainingProgram.getName())) {
+                            showAlertDialog("Already rated this program");
+                            return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         if (nextEx.getText().toString().equals("Submit Rating")) {
             float rating = programRatingBar.getRating();
             trainingProgram.getRatings().add(rating);
@@ -92,9 +115,9 @@ public class Show_Program extends AppCompatActivity {
             float average = sum / (trainingProgram.getRatings().size() - 1);
 
             trainingProgram.setRating(average);
-            DatabaseReference programsRef = FirebaseDatabase.getInstance().getReference("TrainingPrograms").child(trainingProgram.getName());
-            programsRef.child("rating").setValue(average);
-            programsRef.child("ratings").setValue(trainingProgram.getRatings());
+            DatabaseReference pRef = FirebaseDatabase.getInstance().getReference("TrainingPrograms").child(trainingProgram.getName());
+            pRef.child("rating").setValue(average);
+            pRef.child("ratings").setValue(trainingProgram.getRatings());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Thank you for rating " + trainingProgram.getName() + " program\n\nRate: " + rating + "/3")
@@ -104,6 +127,18 @@ public class Show_Program extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int id) {
                             Intent BuiltIn = new Intent(Show_Program.this, Built_In_Programs.class);
                             startActivity(BuiltIn);
+                        }
+                    });
+            String Uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference UserRef = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(Uid)
+                    .child("programs");
+
+            UserRef.push().setValue(trainingProgram.getName())
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            showAlertDialog("Failed to add program to your list.");
                         }
                     });
             AlertDialog alert = builder.create();

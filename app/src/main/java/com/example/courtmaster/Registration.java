@@ -179,7 +179,7 @@ public class Registration extends AppCompatActivity {
                         FirebaseUser user = refAuth.getCurrentUser();
                         if (user != null) {
                             uid = user.getUid();
-                            userdb = new User(uid, name, new ArrayList<>(), new ArrayList<>());
+                            userdb = new User(uid, name, new ArrayList<>());
 
                             refDatabase.child("Users").child(uid).setValue(userdb)
                                     .addOnCompleteListener(saveTask -> {
