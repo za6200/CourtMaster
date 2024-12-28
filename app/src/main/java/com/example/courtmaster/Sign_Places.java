@@ -68,7 +68,8 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     AlertDialog.Builder adb;
     ConstraintLayout court_info;
     EditText etFacilities, etCourtName;
-    boolean isClose = false, FindCourt = false;
+    boolean isClose = false;
+    int FindCourt;
     List<LatLng> courtsLocation = new ArrayList<>();
 
 
@@ -157,6 +158,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                     FBRef.refCourts.child(courtId).setValue(court).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(Sign_Places.this, "Added court", Toast.LENGTH_SHORT).show();
+                            FindCourt = 0;
                         }
                         else
                         {
@@ -299,7 +301,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
                         });
 
                         Toast.makeText(this, "Nearby basketball places added to the map.", Toast.LENGTH_SHORT).show();
-                        FindCourt = true;
+                        FindCourt++;
 
                     } catch (JSONException e) {
                         Log.e(TAG, "JSON parsing error: ", e);
@@ -418,7 +420,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void addCourt(View view) {
-        if(FindCourt) {
+        if(FindCourt > 0) {
             CreateDialog();
             if (court_info.getParent() != null) {
                 ((ViewGroup) court_info.getParent()).removeView(court_info);
@@ -426,7 +428,6 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
             if (!isClose) {
                 adb.show();
             }
-            FindCourt = false;
         }
         else {
             showAlertDialog("Press Find Courts first!");
