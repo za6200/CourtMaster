@@ -6,17 +6,17 @@ import java.util.List;
 public class User extends Training_Program {
     private String uid;
     private String username;
-    private List<String> ratedPrograms;
+    private List<String> programs;
 
 
     public User() {
-        this.ratedPrograms = new ArrayList<>();
+        this.programs = new ArrayList<>();
     }
 
-    public User(String uid, String username,  List<String> ratedPrograms) {
+    public User(String uid, String username,  List<String> programs) {
         this.uid = uid;
         this.username = username;
-        this.ratedPrograms = new ArrayList<>();
+        this.programs = new ArrayList<>();
     }
 
     public String getUid() {
@@ -35,12 +35,12 @@ public class User extends Training_Program {
         this.username = username;
     }
 
-    public List<String> getRatedPrograms()
+    public List<String> getPrograms()
     {
-        return this.ratedPrograms;
+        return this.programs;
     }
-    public void setRatedPrograms(List<String> program)
+    public void setPrograms(List<String> program)
     {
-        this.ratedPrograms = ratedPrograms;
+        this.programs = program;
     }
 }

@@ -143,7 +143,6 @@ public class Registration extends AppCompatActivity {
                         Intent mainScreenIntent = new Intent(Registration.this, MainScreen.class);
                         startActivity(mainScreenIntent);
                     } else {
-                        Log.d(TAG, "signInWithEmail: failure", task.getException());
                         showAlertDialog("E-mail or password are incorrect.");
                     }
                 });
@@ -185,7 +184,6 @@ public class Registration extends AppCompatActivity {
                                     .addOnCompleteListener(saveTask -> {
                                         if (saveTask.isSuccessful()) {
                                             Toast.makeText(Registration.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                                            Log.d(TAG, "createUserWithEmail: success");
 
                                             SharedPreferences.Editor editor = settings.edit();
                                             editor.putBoolean("Remain linked", cBstayconnect.isChecked());

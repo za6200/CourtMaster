@@ -32,7 +32,7 @@ public class Show_Program extends AppCompatActivity {
     Button nextEx;
     YouTubePlayer activeYouTubePlayer = null;
     YouTubePlayerView youTubePlayerView;
-    boolean MyProgram;
+    boolean MyProgram, DataChange, rated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,8 @@ public class Show_Program extends AppCompatActivity {
         MyProgram = programInfo.getBooleanExtra("My program", false);
         ProgramTV.setText(trainingProgram.getName());
         position = 0;
+        DataChange = false;
+        rated = false;
 
         if (trainingProgram != null && position != -1) {
             updateExerciseDetails(); // Update the UI with the first exercise details
@@ -84,26 +86,7 @@ public class Show_Program extends AppCompatActivity {
     }
 
     public void nextExercise(View view) {
-        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-
-        userRef.child(currentUid).child("programs").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if(snapshot.getChildren().toString().equals(trainingProgram.getName())) {
-                            showAlertDialog("Already rated this program");
-                            return;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         if (nextEx.getText().toString().equals("Submit Rating")) {
             float rating = programRatingBar.getRating();
             trainingProgram.getRatings().add(rating);
@@ -120,15 +103,6 @@ public class Show_Program extends AppCompatActivity {
             pRef.child("ratings").setValue(trainingProgram.getRatings());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Thank you for rating " + trainingProgram.getName() + " program\n\nRate: " + rating + "/3")
-                    .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent BuiltIn = new Intent(Show_Program.this, Built_In_Programs.class);
-                            startActivity(BuiltIn);
-                        }
-                    });
             String Uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReference UserRef = FirebaseDatabase.getInstance()
                     .getReference("Users")
@@ -141,6 +115,17 @@ public class Show_Program extends AppCompatActivity {
                             showAlertDialog("Failed to add program to your list.");
                         }
                     });
+            builder.setMessage("Thank you for rating " + trainingProgram.getName() + " program\n\nRate: " + rating + "/3")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            Intent BuiltIn = new Intent(Show_Program.this, Built_In_Programs.class);
+                            startActivity(BuiltIn);
+                        }
+                    });
+
             AlertDialog alert = builder.create();
             alert.show();
         } else if (position + 1 < trainingProgram.getProgram().size()) {
@@ -170,10 +155,20 @@ public class Show_Program extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("OK", null);
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(rated) {
+                            Intent BuiltIn = new Intent(Show_Program.this, Built_In_Programs.class);
+                            startActivity(BuiltIn);
+                            rated = false;
+                        }
+                    }
+                });
         AlertDialog alert = builder.create();
         alert.show();
     }
+
 
     private void showAlertDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -211,6 +206,29 @@ public class Show_Program extends AppCompatActivity {
                             normalShowAlertDialog("Can't rate yourself");
                             return;
                         }
+                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+
+                        userRef.child(currentUid).child("programs").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                 if(!DataChange) {
+                                     DataChange = true;
+                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                         if (snapshot.getValue().equals(trainingProgram.getName())) {
+                                             rated = true;
+                                             normalShowAlertDialog("Already rated this program");
+
+
+                                         }
+                                     }
+                                 }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                         ExerciseDetailsTV.setText("Rate the program using the RatingBar below:");
                         nextEx.setText("Submit Rating");
                         youTubePlayerView.setVisibility(View.INVISIBLE);
