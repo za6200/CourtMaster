@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +51,13 @@ public class Show_Program extends AppCompatActivity {
 
         // Initially hide the rating bar
         programRatingBar.setVisibility(View.GONE);
+
+        programRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            if (fromUser) {
+                Toast.makeText(this, "Rating: " + rating, Toast.LENGTH_SHORT).show();
+                // Add additional logic here if needed
+            }
+        });
 
         // Get the training program from the intent
         programInfo = getIntent();

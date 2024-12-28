@@ -15,6 +15,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,6 +43,7 @@ dependencies {
     implementation ("com.android.volley:volley:1.2.1")
     implementation ("org.json:json:20230618")
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.1")
+    implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

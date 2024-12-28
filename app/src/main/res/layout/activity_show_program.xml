@@ -58,12 +58,29 @@
         android:layout_width="match_parent"
         android:layout_height="16dp" />
 
-    <RatingBar
-        android:id="@+id/programRatingBar"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:numStars="3" />
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <RatingBar
+            android:id="@+id/programRatingBar"
+            android:layout_width="294dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fadingEdgeLength="@dimen/cardview_compat_inset_shadow"
+            android:numStars="3" />
+
+        <Space
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/youtubePlayer"
