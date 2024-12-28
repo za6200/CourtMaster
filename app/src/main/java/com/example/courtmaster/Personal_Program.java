@@ -111,10 +111,11 @@ public class Personal_Program extends AppCompatActivity implements AdapterView.O
                 if (nameExists) {
                     showAlertDialog("A program with this name already exists. Please choose a different name.");
                     ProgramNameET.setVisibility(View.VISIBLE);
-
+                    PersonalProgramTV.setText(ProgramNameET.getText().toString());
                 }
 
                 else if(sureCheck < 1) {
+                    PersonalProgramTV.setText(ProgramNameET.getText().toString());
                     PersonalProgram.setName(ProgramNameET.getText().toString());
                     showSureAlertDialog("Are you sure you want to submit Program: " + PersonalProgram.getName());
                     sureCheck++;
