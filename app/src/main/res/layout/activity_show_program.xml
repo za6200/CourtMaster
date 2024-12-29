@@ -74,11 +74,11 @@
             android:layout_width="244dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/quantum_cyan600"
             android:numStars="5"
             android:progressBackgroundTint="#cdcdcd"
             android:progressTint="@color/quantum_yellow500"
             android:stepSize="1" />
+
 
         <Space
             android:layout_width="120dp"
