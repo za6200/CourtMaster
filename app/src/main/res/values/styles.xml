@@ -1,8 +1,0 @@
-<resources>
-    <style name="CustomRatingBar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:numStars">3</item>
-        <item name="android:stepSize">1</item>
-        <item name="android:isIndicator">false</item>
-        <item name="android:progressDrawable">@drawable/rating_star_selector</item>
-    </style>
-</resources>
