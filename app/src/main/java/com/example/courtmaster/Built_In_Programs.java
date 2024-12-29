@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Built_In_Programs extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -52,19 +54,31 @@ public class Built_In_Programs extends AppCompatActivity implements AdapterView.
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 trainingProgramList.clear();
 
+                // Populate the list with programs from the database
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Training_Program trainingProgram = snapshot.getValue(Training_Program.class);
                     if (trainingProgram != null) {
                         trainingProgramList.add(trainingProgram);
                     }
                 }
+
+                // Sort the list by rating in descending order
+                Collections.sort(trainingProgramList, new Comparator<Training_Program>() {
+                    @Override
+                    public int compare(Training_Program p1, Training_Program p2) {
+                        return Float.compare(p2.getRating(), p1.getRating()); // Descending order
+                    }
+                });
+
+                // Update the adapter with the sorted list
                 addProgramsToAdapter();
                 wating.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                showAlertDialog("Error loading programs");
+                // Handle any errors
+                System.err.println("Error fetching programs: " + databaseError.getMessage());
             }
         });
     }

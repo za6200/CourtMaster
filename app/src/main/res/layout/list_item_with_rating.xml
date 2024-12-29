@@ -3,34 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
+    android:padding="8dp"
     android:background="@drawable/rounded_background_light">
 
-    <!-- Program Name -->
     <RatingBar
         android:id="@+id/ratingBar"
         style="@android:style/Widget.DeviceDefault.Light.RatingBar"
-        android:layout_width="138dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:isIndicator="true"
-        android:numStars="3"
-        android:rating="3"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
+        android:numStars="5"
+        android:progressTint="@color/quantum_yellow500"
+        android:rating="5"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
         android:stepSize="1" />
 
     <TextView
         android:id="@+id/listItemText"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
-        android:layout_weight="1"
+        android:layout_width="51dp"
+        android:layout_height="68dp"
+        android:layout_weight="3"
         android:ellipsize="end"
         android:gravity="center"
         android:singleLine="true"
         android:text="Program Name"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
-
-    <!-- Smaller Read-Only RatingBar -->
 </LinearLayout>

@@ -129,7 +129,7 @@ public class Show_Program extends AppCompatActivity {
                             showAlertDialog("Failed to add program to your list.");
                         }
                     });
-            builder.setMessage("Thank you for rating " + trainingProgram.getName() + " program\n\nRate: " + rating + "/3")
+            builder.setMessage("Thank you for rating " + trainingProgram.getName() + " program\n\nRate: " + rating + "/5")
                     .setCancelable(false)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
