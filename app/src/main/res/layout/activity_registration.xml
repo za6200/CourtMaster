@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/loginbackground"
     tools:context=".Registration">
 
@@ -13,19 +14,17 @@
         android:id="@+id/tVtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/holo_green_dark"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="40dp" />
+        android:text="Login"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="32sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/eTname"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:hint="Name"
@@ -33,41 +32,32 @@
         android:ems="10"
         android:padding="12dp"
         android:background="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@+id/tVtitle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginTop="36dp" />
 
     <EditText
         android:id="@+id/eTemail"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:padding="12dp"
         android:background="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@+id/eTname"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginTop="20dp" />
 
     <EditText
         android:id="@+id/eTpass"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
         android:ems="10"
         android:padding="12dp"
         android:background="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@+id/eTemail"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginTop="20dp" />
@@ -78,8 +68,6 @@
         android:layout_height="wrap_content"
         android:text="Stay Connected"
         android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/eTpass"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="48dp"
         android:layout_marginTop="20dp" />
 
@@ -91,15 +79,17 @@
         android:textSize="14sp"
         android:textColor="@android:color/white"
         android:backgroundTint="@android:color/holo_orange_dark"
-        app:layout_constraintTop_toBottomOf="@+id/cBstayconnect"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:onClick="switchToRegister" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="190dp" />
+
     <Button
         android:id="@+id/login"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@android:color/holo_blue_dark"
@@ -108,9 +98,6 @@
         android:text="Login"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
