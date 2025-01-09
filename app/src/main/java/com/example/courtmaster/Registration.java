@@ -73,7 +73,7 @@ public class Registration extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         boolean isChecked = settings.getBoolean("Remain linked", false);
-        if (refAuth.getCurrentUser() != null && isChecked) {
+        if (refAuth.getCurrentUser() != null && !isChecked) {
             FBRef.getUser(refAuth.getCurrentUser());
             stayConnect = true;
             Intent si = new Intent(Registration.this, MainScreen.class);

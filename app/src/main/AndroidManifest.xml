@@ -18,21 +18,24 @@
         android:theme="@style/Theme.CourtMaster"
         tools:targetApi="32">
         <activity
+            android:name=".courtDetails"
+            android:exported="false" />
+        <activity
             android:name=".My_Programs"
             android:exported="false"
             android:parentActivityName=".MainScreen" />
         <activity
             android:name=".Personal_Program"
             android:exported="false"
-            android:parentActivityName=".MainScreen"/>
+            android:parentActivityName=".MainScreen" />
         <activity
             android:name=".Show_Program"
             android:exported="false"
-            android:parentActivityName=".Built_In_Programs"/>
+            android:parentActivityName=".Built_In_Programs" />
         <activity
             android:name=".Built_In_Programs"
             android:exported="false"
-            android:parentActivityName=".MainScreen"/>
+            android:parentActivityName=".MainScreen" />
         <activity
             android:name=".MainScreen"
             android:exported="false" />
@@ -42,7 +45,7 @@
         <activity
             android:name=".Sign_Places"
             android:exported="false"
-            android:parentActivityName=".MainScreen"/>
+            android:parentActivityName=".MainScreen" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

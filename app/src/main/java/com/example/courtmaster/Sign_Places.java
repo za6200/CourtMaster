@@ -119,60 +119,6 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
             Retrivieving_Location.dismiss();
         }
     }
-
-    public void CreateDialog()
-    {
-        for(int l = 0; l<courtsLocation.size();l++)
-        {
-            Location location = new Location("");
-            location.setLatitude(courtsLocation.get(l).latitude);
-            location.setLongitude(courtsLocation.get(l).longitude);
-            Location location2 = new Location("");
-            location2.setLatitude(latitude);
-            location2.setLongitude(longitude);
-
-            if(location.distanceTo(location2) < 100)
-            {
-                showAlertDialog("There is already a court nearby!");
-                isClose = true;
-                return;
-            }
-        }
-        adb = new AlertDialog.Builder(this);
-        adb.setView(court_info);
-        court_info.setBackgroundColor(Color.YELLOW);
-        adb.setTitle("New Court Info");
-        adb.setNegativeButton("Add Court", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                    String courtName = etCourtName.getText().toString();
-                    String facilities = etFacilities.getText().toString();
-
-                    Location location = new Location("");
-                    location.setLatitude(latitude);
-                    location.setLongitude(longitude);
-
-                    String courtId = FBRef.refCourts.push().getKey();
-                    Court court = new Court(courtId, latitude, longitude, courtName, facilities);
-
-                    FBRef.refCourts.child(courtId).setValue(court).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Sign_Places.this, "Added court", Toast.LENGTH_SHORT).show();
-                            FindCourt = 0;
-                        }
-                        else
-                        {
-                            showAlertDialog("Add Court failed");
-                        }
-                    });
-                }
-        }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -420,17 +366,7 @@ public class Sign_Places extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void addCourt(View view) {
-        if(FindCourt > 0) {
-            CreateDialog();
-            if (court_info.getParent() != null) {
-                ((ViewGroup) court_info.getParent()).removeView(court_info);
-            }
-            if (!isClose) {
-                adb.show();
-            }
-        }
-        else {
-            showAlertDialog("Press Find Courts first!");
-        }
+        Intent si = new Intent(Sign_Places.this, courtDetails.class);
+        startActivity(si);
     }
 }
