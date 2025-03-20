@@ -79,6 +79,7 @@ public class MainScreen extends AppCompatActivity {
             }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //
         String st = item.getTitle() != null ? item.getTitle().toString().trim() : "";
 
         if (st.equalsIgnoreCase("Registration")) {
