@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/Registration"
-        android:title="Registration"
-        android:orderInCategory="100" />
+        android:id="@+id/menu_registration"
+        android:title="Registration"/>
     <item
-        android:id="@+id/Video"
-        android:title="Video"
-        android:orderInCategory="200" />
+        android:id="@+id/menu_main_screen"
+        android:title="Main screen"/>
     <item
-        android:id="@+id/GPS_SPOT"
-        android:title="GPS_SPOT"
-        android:orderInCategory="300" />
+        android:id="@+id/menu_built_in"
+        android:title="Built in"/>
     <item
-        android:id="@+id/Sign_Places"
-        android:title="Sign_Places"
-        android:orderInCategory="400" />
+        android:id="@+id/menu_personal"
+        android:title="Personal"/>
     <item
-        android:id="@+id/Signs2"
-        android:title="Signs2"
-        android:orderInCategory="500" />
-
+        android:id="@+id/menu_find_courts"
+        android:title="Find courts"/>
+    <item
+        android:id="@+id/menu_my_programs"
+        android:title="My programs"/>
 </menu>

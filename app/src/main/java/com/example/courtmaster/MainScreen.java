@@ -2,8 +2,11 @@ package com.example.courtmaster;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -67,4 +70,34 @@ public class MainScreen extends AppCompatActivity {
                 Intent MyPrograms = new Intent(MainScreen.this, My_Programs.class);
                 startActivity(MyPrograms);
             }
+
+            @Override
+            public boolean onCreateOptionsMenu(Menu menu)
+            {
+                getMenuInflater().inflate(R.menu.main, menu);
+                return super.onCreateOptionsMenu(menu);
+            }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        String st = item.getTitle() != null ? item.getTitle().toString().trim() : "";
+
+        if (st.equalsIgnoreCase("Registration")) {
+            startActivity(new Intent(this, Registration.class));
+        } else if (st.equalsIgnoreCase("Main screen")) {
+            startActivity(new Intent(this, MainScreen.class));
+        } else if (st.equalsIgnoreCase("Built in")) {
+            startActivity(new Intent(this, Built_In_Programs.class));
+        } else if (st.equalsIgnoreCase("Personal")) {
+            startActivity(new Intent(this, Personal_Program.class));
+        } else if (st.equalsIgnoreCase("Find courts")) {
+            startActivity(new Intent(this, Sign_Places.class));
+        } else if (st.equalsIgnoreCase("My programs")) {
+            startActivity(new Intent(this, My_Programs.class));
+        } else {
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
+}
